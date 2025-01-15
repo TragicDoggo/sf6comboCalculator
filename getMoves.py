@@ -10,7 +10,7 @@ class moves:
         '''combines a character name with a file suffix and extension (must match file case)
 
         :param character: Name of character (capitalised first letter)
-        :return: csv f
+        :return: csv
         '''
         root_dir = Path(__file__).resolve().parent.parent
         try:
@@ -19,7 +19,7 @@ class moves:
         except Exception as e:
             print(f'Failed to get file_name: {e}')
 
-    def get_moves(file_name):
+    def get_moves(file_name,move_type):
         '''takes a file name as an argument, opens that file and returns a list of all the moves in the file
 
         :param file_name: the file name to be opened
@@ -32,8 +32,13 @@ class moves:
 
         try:
             with open(file_name, 'r') as csv_file:
+                print(move_type)
                 reader=csv.DictReader(csv_file,delimiter=',')
-                moves = [row ['Move'] for row in reader if row ['Visible?'] == 'Yes']
+                moves = []
+                for row in reader:
+                    if (row ['Visible?'] == 'Yes') & (row ['Move type'] == move_type):
+                        moves.append(row['Move'])
+                print(moves)
             return moves
 
         except Exception as e:

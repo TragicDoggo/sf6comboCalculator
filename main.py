@@ -12,8 +12,10 @@ def main_page():
     state = {
         # variables for loading moves
         'file_name': '',
+        'available_moves':[],
         'move_list': [],
         'character': 'None',
+        'move_type':'Normal',
         #variables for calculating damage/scaling/drive gauge
         'counter': 'No Counter',
         'perfect_parry': False,
@@ -106,19 +108,23 @@ def main_page():
             with char_specific_row:
                 ui.label('No character specific options available')
 
-    def characterSelected(state, selected_character, move_dropdown, label):
+    def characterSelected(state, selected_character):
         state['character'] = selected_character
         state['additional_damage'] = 0
         state['character_specifics']['Jamie'] = 2
         state['file_name'] = m.get_character(selected_character)
-        all_moves = m.get_moves(state['file_name'])
-        move_dropdown.set_options(all_moves)
         clearList(state)
-        ui.colors(primary=state['char_custom_dict'][selected_character][0])
+        ui.colors(primary=state['char_custom_dict'][state['character']][0]).update()
         character_portrait.set_source(state['char_custom_dict'][selected_character][1])
-        label.content = f'###### **{selected_character}**'
+        character_label.set_content(f'###### **{selected_character}**')
+        filterMoves(state['move_type'],state)
         characterSpecificStuff(state)
         return selected_character
+
+    def filterMoves(value,state):
+        state['move_type']=value
+        state['available_moves'] = m.get_moves(state['file_name'],state['move_type'])
+        move_dropdown.set_options(state['available_moves'])
 
     def createChip(name):
         if name:
@@ -187,7 +193,7 @@ def main_page():
     def calculateDamage(state):
         move_dict = m.get_selected_moves_data(state['file_name'], state['move_list'])
         try:
-            data = cc.comboCalculatorFunc(move_dict, state)
+            data = cc.comboCalculatorFunc(move_dict,state)
             state['final_damage'] = data[0] + state['additional_damage']
             state['combo_data'] = data[1]
             state['drive_gauge'] = data[2]
@@ -195,7 +201,7 @@ def main_page():
             calculateDriveGauge(state)
         except Exception as e:
             print(f'Calculator function error: {e}')
-        with col2:
+        with output_column:
             final_damage_number = state['final_damage']
             final_damage_label.set_content(f'#### Damage: **{final_damage_number}**')
 
@@ -283,7 +289,7 @@ def main_page():
                     state['combo_storage'][combo_uuid] = [state['move_list'], damage_label_text, state['counter'],
                                                           state['perfect_parry'], state['character_specifics'][state['character']],
                                                           combo_name]
-                    with col2:
+                    with output_column:
                         with ui.row() as new_combo_row:
                             with ui.card().style('height: auto').props('square flat').classes('drop-shadow-md'):
                                 with ui.row().style('width:100%'):
@@ -322,71 +328,47 @@ def main_page():
         del state['combo_storage'][uuid]
         row.delete()
 
-    with ui.row().style('width:100%;'):
+    with (ui.row().style('width:100%;')):
         # left side
-        with ui.column(align_items='center').style('max-width:240px;min-width:240px;') as left_drawer:
+        with ui.column(align_items='center').style('max-width:240px;min-width:240px;') as parameter_column:
             with ui.card().style('width:100%;height:100%;').props('square flat'):
                 with ui.row():
                     # dropdown button for selecting a character. runs update_dropdown function on selection which loads the character moves and sets them as options for the move_dropdown
-                    with ui.dropdown_button('Character', auto_close=True, icon='switch_account').style(
-                            'width: auto') as select_character_button:
-                        ui.item('A.K.I.').on('mousedown',
-                                             lambda: characterSelected(state, 'A.K.I.', move_dropdown, character_label))
-                        ui.item('Akuma').on('mousedown',
-                                            lambda: characterSelected(state, 'Akuma', move_dropdown, character_label))
-                        ui.item('Blanka').on('mousedown',
-                                             lambda: characterSelected(state, 'Blanka', move_dropdown, character_label))
-                        ui.item('Cammy').on('mousedown',
-                                            lambda: characterSelected(state, 'Cammy', move_dropdown, character_label))
-                        ui.item('Chun-Li').on('mousedown', lambda: characterSelected(state, 'Chun-Li', move_dropdown,
-                                                                                     character_label))
-                        ui.item('Dee Jay').on('mousedown', lambda: characterSelected(state, 'Dee Jay', move_dropdown,
-                                                                                     character_label))
-                        ui.item('Dhalsim').on('mousedown', lambda: characterSelected(state, 'Dhalsim', move_dropdown,
-                                                                                     character_label))
-                        ui.item('Ed').on('mousedown',
-                                         lambda: characterSelected(state, 'Ed', move_dropdown, character_label))
-                        ui.item('E.Honda').on('mousedown', lambda: characterSelected(state, 'E.Honda', move_dropdown,
-                                                                                     character_label))
-                        ui.item('Guile').on('mousedown',
-                                            lambda: characterSelected(state, 'Guile', move_dropdown, character_label))
-                        ui.item('Jamie').on('mousedown',
-                                            lambda: characterSelected(state, 'Jamie', move_dropdown, character_label))
-                        ui.item('JP').on('mousedown',
-                                         lambda: characterSelected(state, 'JP', move_dropdown, character_label))
-                        ui.item('Juri').on('mousedown',
-                                           lambda: characterSelected(state, 'Juri', move_dropdown, character_label))
-                        ui.item('Ken').on('mousedown',
-                                          lambda: characterSelected(state, 'Ken', move_dropdown, character_label))
-                        ui.item('Kimberly').on('mousedown', lambda: characterSelected(state, 'Kimberly', move_dropdown,
-                                                                                      character_label))
-                        ui.item('Lily').on('mousedown',
-                                           lambda: characterSelected(state, 'Lily', move_dropdown, character_label))
-                        ui.item('Luke').on('mousedown',
-                                           lambda: characterSelected(state, 'Luke', move_dropdown, character_label))
-                        ui.item('M. Bison').on('mousedown', lambda: characterSelected(state, 'M. Bison', move_dropdown,
-                                                                                      character_label))
-                        ui.item('Manon').on('mousedown',
-                                            lambda: characterSelected(state, 'Manon', move_dropdown, character_label))
-                        ui.item('Marisa').on('mousedown',
-                                             lambda: characterSelected(state, 'Akuma', move_dropdown, character_label))
-                        ui.item('Rashid').on('mousedown',
-                                             lambda: characterSelected(state, 'Rashid', move_dropdown, character_label))
-                        ui.item('Ryu').on('mousedown',
-                                          lambda: characterSelected(state, 'Ryu', move_dropdown, character_label))
-                        ui.item('Terry').on('mousedown',
-                                            lambda: characterSelected(state, 'Terry', move_dropdown, character_label))
-                        ui.item('Zangief').on('mousedown', lambda: characterSelected(state, 'Zangief', move_dropdown,
-                                                                                     character_label))
-
+                    with ui.button('Character', icon='switch_account').style('width: auto').props('align=left icon-right=arrow_drop_down') as select_character_button:
+                        with ui.menu().style('width: 180px'):
+                            ui.menu_item('A.K.I.').on('mousedown',lambda: characterSelected(state, 'A.K.I.'))
+                            ui.menu_item('Akuma').on('mousedown', lambda: characterSelected(state, 'Akuma'))
+                            ui.menu_item('Blanka').on('mousedown',lambda: characterSelected(state, 'Blanka'))
+                            ui.menu_item('Cammy').on('mousedown', lambda: characterSelected(state, 'Cammy'))
+                            ui.menu_item('Chun-Li').on('mousedown', lambda: characterSelected(state, 'Chun-Li'))
+                            ui.menu_item('Dee Jay').on('mousedown', lambda: characterSelected(state, 'Dee Jay'))
+                            ui.menu_item('Dhalsim').on('mousedown', lambda: characterSelected(state, 'Dhalsim'))
+                            ui.menu_item('Ed').on('mousedown',lambda: characterSelected(state, 'Ed'))
+                            ui.menu_item('E.Honda').on('mousedown', lambda: characterSelected(state, 'E.Honda'))
+                            ui.menu_item('Guile').on('mousedown',lambda: characterSelected(state, 'Guile'))
+                            ui.menu_item('Jamie').on('mousedown',lambda: characterSelected(state, 'Jamie'))
+                            ui.menu_item('JP').on('mousedown',lambda: characterSelected(state, 'JP'))
+                            ui.menu_item('Juri').on('mousedown',lambda: characterSelected(state, 'Juri'))
+                            ui.menu_item('Ken').on('mousedown',lambda: characterSelected(state, 'Ken'))
+                            ui.menu_item('Kimberly').on('mousedown', lambda: characterSelected(state, 'Kimberly'))
+                            ui.menu_item('Lily').on('mousedown', lambda: characterSelected(state, 'Lily'))
+                            ui.menu_item('Luke').on('mousedown', lambda: characterSelected(state, 'Luke'))
+                            ui.menu_item('M. Bison').on('mousedown', lambda: characterSelected(state, 'M. Bison'))
+                            ui.menu_item('Manon').on('mousedown', lambda: characterSelected(state, 'Manon'))
+                            ui.menu_item('Marisa').on('mousedown', lambda: characterSelected(state, 'Akuma'))
+                            ui.menu_item('Rashid').on('mousedown', lambda: characterSelected(state, 'Rashid'))
+                            ui.menu_item('Ryu').on('mousedown', lambda: characterSelected(state, 'Ryu'))
+                            ui.menu_item('Terry').on('mousedown', lambda: characterSelected(state, 'Terry'))
+                            ui.menu_item('Zangief').on('mousedown', lambda: characterSelected(state, 'Zangief'))
+                #character label and portrait
                 with ui.row().style('width: 100%; justify-content: center;'):
                     character_label = ui.markdown('###### None').style('width:100%; text-align: center;')
                     character_portrait = ui.image(state['char_custom_dict'][state['character']][1]).style('height:56px;width:56px').classes('shadow-md rounded-borders')
-
+                #character move select box and filter
                 ui.markdown('**Character Moves:**')
+                move_type_toggle = ui.toggle(['Normal','Special','Drive'],value=state['move_type'], on_change= lambda e:filterMoves(e.value,state)).props('dense')
                 with ui.row():
-                    move_dropdown = ui.select(label='Select Move', options=[], with_input=True,
-                                              on_change=lambda e: createChip(e.value)).style('width:75%')
+                    move_dropdown = ui.select(label='Select Move', options=[], with_input=True,on_change=lambda e: createChip(e.value)).style('width:75%')
                     select_button = ui.button(icon='check', on_click=lambda e: createChip(move_dropdown.value)).style(
                         'position:relative; top:10px; width:15%')
 
@@ -405,7 +387,7 @@ def main_page():
                     ui.label('No character selected')
 
         # main body
-        with ui.column().style('flex:1; width:100%;min-width:240px;') as main_col:
+        with ui.column().style('flex:1; width:100%;min-width:240px;') as combo_column:
             ui.markdown('#### **Combo string**:').style('flex:1; min-width: 240px')
             with ui.card().style('width: 100%; height:auto; min-height: 180px').classes('drop-shadow-md').props(
                     'square flat') as chips_card:
@@ -418,7 +400,7 @@ def main_page():
                     'position: absolute; bottom: 10px; right: 10px')
 
         # right side
-        with ui.column(align_items='center').style('width:20%;max-width:240px;min-width:240px;') as col2:
+        with ui.column(align_items='center').style('width:20%;max-width:240px;min-width:240px;') as output_column:
             with ui.card().props('square flat'):
                 final_damage_number = state['final_damage']
                 final_damage_label = ui.markdown(f'#### Damage: **{final_damage_number}**').style('width: 100%')
@@ -525,7 +507,7 @@ def main_page():
 
 
 
-ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg')
+ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg',on_air=False)
 
 #to do:
 # create definitions for keywords

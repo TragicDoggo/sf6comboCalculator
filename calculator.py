@@ -4,13 +4,6 @@ import re
 class comboCalculator:
 
     def comboCalculatorFunc(selectedMoves,state):
-        '''calculator function which takes a dictionary of all selected moves, and calculates the overall damage of the combo
-
-        :param selectedMoves: a dictionary of the selected moves
-        :param counter: the counter multiplier, usually 1.5 for counter/punish counter
-        :param move_cancelled: a bool which should be true if the last move was SA3 or CA and was cancelled into from a special
-        :param pp_multiplier: a float which should either be 1 or .5. If a combo was performed following a perfect parry, the damage is halved
-        '''
         #variables from ui
         counter = state['counter']
         move_cancelled = state['cancelled_special']
@@ -58,7 +51,6 @@ class comboCalculator:
 
         #get first entry in selectedMoves
         if selectedMoves:
-            first_move = next(iter(selectedMoves))
             first_move_data = selectedMoves[0]
         else:
             return combo_damage,combo_data, drive_gauge
@@ -102,7 +94,7 @@ class comboCalculator:
                 final_scaling = move_data['Min scaling']
                 super_override = True
             #finally multiply damage by final scaling figure
-            damage = move_data['Damage'] * final_scaling
+            damage = math.floor(move_data['Damage'] * final_scaling)
             #hits_left = hits_left - 1
             #if it is the first move in the combo, multiply the damage for this hit by the counter multiplier
             if scaling_index == 0:
