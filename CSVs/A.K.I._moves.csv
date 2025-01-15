@@ -1,0 +1,68 @@
+Move,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,Immediate scaling,Min scaling,Counter multiplier,Punish multiplier,Drive gain,Visible?
+5LP,300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
+5MP,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
+5HP,800,1,None,1,0,0,0,1.2,1.2,3000,Yes
+5LK,300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
+5MK,700,1,None,1,0,0,0,1.2,1.2,2000,Yes
+5HK,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
+2LP,300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
+2MP,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
+2HP,900,1,None,1,0,0,0,1.2,1.2,3000,Yes
+2LK,200,1,None,0.8,0,0,0,1.2,1.2,250,Yes
+2MK,600,1,None,0.9,0,0,0,1.2,1.2,1000,Yes
+2HK,900,1,None,1,0,0,0,1.2,1.2,3000,Yes
+8LP,300,1,None,1,0,0,0,1.2,1.2,500,Yes
+8MP,700,1,None,1,0,0,0,1.2,1.2,1000,Yes
+8HP,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
+8LK,300,1,None,1,0,0,0,1.2,1.2,500,Yes
+8MK,600,1,None,1,0,0,0,1.2,1.2,1000,Yes
+8HK,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
+9 > 2HP,800,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+3MP,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
+6HP,900,1,None,1,0,0,0,1.2,1.2,3000,Yes
+6HK,800,1,None,0.8,0,0,0,1.2,1.2,3000,Yes
+5LP > 5LP target combo,300,1,> 5LP (5LP > 5LP target combo),0.8,0,0,0,1.2,1.2,250,Yes
+> 5LP (5LP > 5LP target combo),600,1,None,0.8,0,0,0,1.2,1.2,500,No
+5HP > 5HP target combo,800,1,> 5HP (5HP > 5HP target combo),1,0,0,0,1.2,1.2,3000,Yes
+> 5HP (5HP > 5HP target combo),1200,1,None,1,0,0,0,1.2,1.2,3000,No
+2PP > 5K,600,1,None,1,0,0,0,1.2,1.2,3000,Yes
+2PP > 5P,1100,1,None,1,0,0,0,1.2,1.2,2000,Yes
+2PP > LPLK,1852,1,None,1,0,0,0,1.2,1.2,5000,Yes
+214LP,500,1,None,1,0,0,0,1.2,1.2,1000,Yes
+214LP > 6P,500,1,> 6P (214LP > 6P)(Toxic Blossom),1,0,0,0,1.2,1.2,1000,Yes
+> 6P (214LP > 6P)(Toxic Blossom),800,1,None,1,0,0,0,1.2,1.2,1000,No
+214LP > 6P (burst),800,1,None,1,0,0,0,1.2,1.2,1000,Yes
+214PP,700,1,None,1,0,0,0,1.2,1.2,-20000,Yes
+214PP > 6P,700,1,> 6P (214PP > 6P)(Toxic Blossom),1,0,0,0,1.2,1.2,-20000,Yes
+> 6P (214PP > 6P)(Toxic Blossom),800,2,None,0.7,0,0,0,1.2,1.2,0,No
+214PP > 6P (burst) (far),800,2,None,0.7,0,0,0,1.2,1.2,-20000,Yes
+214PP > 6P (burst),1600,2,None,0.7,0,0,0,1.2,1.2,-20000,Yes
+214PP (1 hit) > 6P (burst),300,1,> 6P (214PP (1 hit) > 6P (burst))(Toxic Blossom),1,0,0,0,1.2,1.2,-20000,Yes
+> 6P (214PP (1 hit) > 6P (burst))(Toxic Blossom),1600,2,None,0.7,0,0,0,1.2,1.2,0,No
+214HP,800,1,None,1,0,-0.15,0,1.2,1.2,2000,Yes
+236LP,500,1,None,1,0,0,0,1.2,1.2,2000,Yes
+236LP (Toxic Blossom),800,1,None,1,0,0,0,1.2,1.2,2000,Yes
+236MP,600,1,None,1,0,0,0,1.2,1.2,2000,Yes
+236MP (Toxic Blossom),700,1,None,1,0,0,0,1.2,1.2,2000,Yes
+236HP,700,1,None,1,0,0,0,1.2,1.2,2500,Yes
+236HP (Toxic Blossom),800,1,None,1,0,0,0,1.2,1.2,2500,Yes
+236PP,600,2,None,0.8,0,0,0,1.2,1.2,-20000,Yes
+236PP (Toxic Blossom),800,2,None,0.9,0,0,0,1.2,1.2,-20000,Yes
+214LK,800,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+214LK (Crouching opponent),400,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+214MK,900,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+214MK (Crouching opponent),500,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+214HK,1000,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+214HK (Crouching opponent),600,1,None,0.8,0,0,0,1.2,1.2,2000,Yes
+214KK (1 hit) (Crouching opponent),400,1,None,1,0,0,0,1.2,1.2,-20000,Yes
+214KK (2 hit) (Crouching opponent),640,1,None,1,0,0,0,1.2,1.2,-20000,Yes
+214KK,1600,1,None,1,0,0,0,1.2,1.2,-20000,Yes
+SA1,1800,1,None,1,0,0,0.3,1.2,1.2,0,Yes
+SA2,2500,1,None,1,0,0,0.4,1.2,1.2,0,Yes
+SA3,4000,1,None,1,0,0,0.5,1.2,1.2,0,Yes
+CA,4500,1,None,1,0,0,0.5,1.2,1.2,0,Yes
+Drive Impact,800,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
+Drive Impact Wall Splat,800,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
+Drive Impact Wall Splat (blocked),0,0,None,1,0,0,0,1.2,1.2,-10000,Yes
+Drive Rush Cancel,0,0,None,1,0,0,0,1.2,1.2,-30000,Yes
+Drive Rush,0,0,None,1,0,0,0,1.2,1.2,-10000,Yes
