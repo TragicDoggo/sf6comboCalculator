@@ -56,9 +56,11 @@ def main_page():
                             </svg>
                             ''',
         # character UI colours and icons
-        'char_custom_dict': {'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/None.png'], 'A.K.I.': ['#6b254b', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/A.K.I..png'], 'Akuma': ['#8e1f11', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Akuma.png'], 'Blanka': ['#036c03', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Blanka.png'], 'Cammy': ['#355f97', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Cammy.png'], 'Chun-Li': ['#6483de', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Chun-Li.png'], 'Dee Jay': ['#008b0c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Dee Jay.png'], 'Dhalsim': ['#d7a403', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Dhalsim.png'], 'Ed': ['#086b7a', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Ed.png'], 'E.Honda': ['#a90600', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/E.Honda.png'], 'Guile': ['#316326', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Guile.png'], 'Jamie': ['#bc9c0e', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Jamie.png'], 'JP': ['#3c2a51', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/JP.png'], 'Juri': ['#601199', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Juri.png'], 'Ken': ['#bd1613', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Ken.png'], 'Kimberly': ['#7584', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Kimberly.png'], 'Lily': ['#d78076', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Lily.png'], 'Luke': ['#4628c9', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Luke.png'], 'M. Bison': ['#61346d', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/M. Bison.png'], 'Manon': ['#796dc7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Manon.png'], 'Marisa': ['#b90302', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Marisa.png'], 'Rashid': ['#cb7c1c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Rashid.png'], 'Ryu': ['#863532', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Ryu.png'], 'Terry': ['#8e1b18', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Terry.png'], 'Zangief': ['#c91212', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/portraits/Zangief.png']},
+        'char_custom_dict': {'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'], 'A.K.I.': ['#6b254b', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/A.K.I..png'], 'Akuma': ['#8e1f11', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Akuma.png'], 'Blanka': ['#036c03', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Blanka.png'], 'Cammy': ['#355f97', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Cammy.png'], 'Chun-Li': ['#6483de', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Chun-Li.png'], 'Dee Jay': ['#008b0c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dee Jay.png'], 'Dhalsim': ['#d7a403', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dhalsim.png'], 'Ed': ['#086b7a', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ed.png'], 'E.Honda': ['#a90600', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/E.Honda.png'], 'Guile': ['#316326', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Guile.png'], 'Jamie': ['#bc9c0e', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Jamie.png'], 'JP': ['#3c2a51', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/JP.png'], 'Juri': ['#601199', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Juri.png'], 'Ken': ['#bd1613', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ken.png'], 'Kimberly': ['#7584', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Kimberly.png'], 'Lily': ['#d78076', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Lily.png'], 'Luke': ['#4628c9', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Luke.png'], 'M. Bison': ['#61346d', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/M. Bison.png'], 'Manon': ['#796dc7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Manon.png'], 'Marisa': ['#b90302', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Marisa.png'], 'Rashid': ['#cb7c1c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Rashid.png'], 'Ryu': ['#863532', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ryu.png'], 'Terry': ['#8e1b18', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Terry.png'], 'Zangief': ['#c91212', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Zangief.png']},
          # character specific variables
-        'character_specifics': {'Jamie': 2},
+        'character_specifics': {'Jamie': 2,
+                                'A.K.I.': 0},
+
         # faq term info
         'faq_tables': {'term_columns': [{'name': 'name', 'label': 'Name', 'field': 'name', 'sortable': False},
                                                 {'name': 'meaning', 'label': 'Meaning', 'field': 'meaning',
@@ -283,7 +285,7 @@ def main_page():
                                                           combo_name]
                     with col2:
                         with ui.row() as new_combo_row:
-                            with ui.card().style('height: auto').props('square flat bordered'):
+                            with ui.card().style('height: auto').props('square flat').classes('drop-shadow-md'):
                                 with ui.row().style('width:100%'):
                                     with ui.column().style('width:15%').classes('gap-1'):
                                         ui.button(icon='arrow_back',on_click=lambda: restoreCombo(state,combo_uuid)).style('width:24px;')
@@ -378,10 +380,8 @@ def main_page():
                                                                                      character_label))
 
                 with ui.row().style('width: 100%; justify-content: center;'):
-                    character_label = ui.markdown('###### None').style(
-                        'width:100%; text-align: center;')  # height: 150px; width: 100%;
-                    character_portrait = ui.image(state['char_custom_dict'][state['character']][1]).classes(
-                        'h-16 w-16 flat bordered rounded-borders')
+                    character_label = ui.markdown('###### None').style('width:100%; text-align: center;')
+                    character_portrait = ui.image(state['char_custom_dict'][state['character']][1]).style('height:56px;width:56px').classes('shadow-md rounded-borders')
 
                 ui.markdown('**Character Moves:**')
                 with ui.row():
@@ -405,11 +405,11 @@ def main_page():
                     ui.label('No character selected')
 
         # main body
-        with ui.column(align_items='center').style('flex:1; width:100%;min-width:240px;') as main_col:
-            with ui.card().style('width: 100%; height:auto; min-height: 180px').props(
-                    'square flat bordered') as chips_card:
+        with ui.column().style('flex:1; width:100%;min-width:240px;') as main_col:
+            ui.markdown('#### **Combo string**:').style('flex:1; min-width: 240px')
+            with ui.card().style('width: 100%; height:auto; min-height: 180px').classes('drop-shadow-md').props(
+                    'square flat') as chips_card:
                 with ui.row().style('width:100%') as chips_row:
-                    ui.markdown('#### **Combo string**:').style('flex:1; min-width: 240px')
                     counter_chip = ui.chip(icon='undo', text='No Counter', color='#d5deee', ).props(
                         'flat square size=18px').style('justify-self:end')
                 with ui.column() as chips:
@@ -506,7 +506,7 @@ def main_page():
                 ui.markdown('######**Something seems broken…**')
 
                 ui.markdown(
-                    'I am not surprised! Please submit it as a bug report using the button in the bottom left of you screen. Please share as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
+                    'I am not surprised! [Please submit it as a bug report](https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header) using the button in the bottom left of you screen. Please share as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
 
         #footer
         with ui.row().style('width:100%'):
@@ -518,20 +518,17 @@ def main_page():
                     bug_report = ui.menu_item('Bug report', on_click=lambda: ui.navigate.to(
                         'https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header',
                         new_tab=True))
-
-            with ui.link(target='https://more.ko-fi.com/brand-assets'):
+            with ui.link(target='https://ko-fi.com/tragicdog'):
                 ui.image(
-                    'https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a02fcf48af59c591185_support_me_on_kofi_dark-p-500.png').style(
+                    'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
 
 
 
-ui.run(title='Combo Calculator')
+ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg')
 
 #to do:
 # create definitions for keywords
-# add links to kofi
-# add links to bug report section in faq
 # add section select for move select dropdown
 
 
