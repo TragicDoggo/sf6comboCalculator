@@ -1,103 +1,103 @@
-Move,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,Immediate scaling,Min scaling,Counter multiplier,Punish multiplier,Drive gain,Visible?
-5LP,300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
-5MP,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
-5HP,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
-5LK,300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
-5MK (1 hit),400,1,None,1,0,0,0,1.2,1.2,1000,Yes
-5MK,700,1,None,1,0,0,0,1.2,1.2,2000,Yes
-5HK,900,1,None,0.8,0,0,0,1.2,1.2,4000,Yes
-2LP,300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
-2MP,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
-2HP,900,1,None,1,0,0,0,1.2,1.2,2000,Yes
-2LK,200,1,None,0.8,0,0,0,1.2,1.2,250,Yes
-2MK,500,1,None,0.8,0,0,0,1.2,1.2,1000,Yes
-2HK,900,1,None,1,0,0,0,1.2,1.2,3000,Yes
-8LP,300,1,None,1,0,0,0,1.2,1.2,500,Yes
-8MP,500,1,None,1,0,0,0,1.2,1.2,1000,Yes
-8HP,900,1,None,1,0,0,0,1.2,1.2,2000,Yes
-8LK,300,1,None,1,0,0,0,1.2,1.2,500,Yes
-8MK,500,1,None,1,0,0,0,1.2,1.2,1000,Yes
-7 or 9HK,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
-8HK,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
-6MP,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
-6MK,600,1,None,1,0,0,0,1.2,1.2,1500,Yes
-6HP (1 hit),500,1,None,1,0,0,0,1.2,1.2,1250,Yes
-6HP,1000,1,None,1,0,0,0,1.2,1.2,2500,Yes
-4HK (1 hit),400,1,None,1,0,0,0,1.2,1.2,1500,Yes
-4HK,800,1,None,1,0,0,0,1.2,1.2,3500,Yes
-5MP target combo (2 hits),600,1,>4HK (5MP target combo (2 hits)),1,0,0,0,1.2,1.2,1500,Yes
-5MP target combo (3 hit),600,1,>4HK (5MP target combo (3 hit)),1,0,0,0,1.2,1.2,1500,Yes
->4HK (5MP target combo (2 hits)),500,1,None,1,0,0,0,1.2,1.2,1000,No
->4HK (5MP target combo (3 hit)),500,1,>5HP (5MP target combo (3 hit)),1,0,0,0,1.2,1.2,1000,No
->5HP (5MP target combo (3 hit)),600,1,None,1,0,0,0,1.2,1.2,1000,No
-5LP (Install),100,1,None,0.8,0,0,0,1.2,1.2,62,Yes
-5MP (Install),400,1,None,1,0,0,0,1.2,1.2,375,Yes
-5HP (Install),600,1,None,1,0,0,0,1.2,1.2,500,Yes
-5LK (Install),100,1,None,0.8,0,0,0,1.2,1.2,62,Yes
-5MK (Install) (1 hit),300,1,None,1,0,0,0,1.2,1.2,250,Yes
-5MK (Install),500,1,None,1,0,0,0,1.2,1.2,500,Yes
-5HK (Install),700,1,None,0.8,0,0,0,1.2,1.2,1000,Yes
-2LP (Install),100,1,None,0.8,0,0,0,1.2,1.2,62,Yes
-2MP (Install),400,1,None,1,0,0,0,1.2,1.2,375,Yes
-2HP (Install),700,1,None,1,0,0,0,1.2,1.2,500,Yes
-2LK (Install),100,1,None,0.8,0,0,0,1.2,1.2,62,Yes
-2MK (Install),300,1,None,0.8,0,0,0,1.2,1.2,250,Yes
-2HK (Install),700,1,None,1,0,0,0,1.2,1.2,750,Yes
-8LP (Install),400,1,None,1,0,0,0,1.2,1.2,125,Yes
-8MP (Install),400,1,None,1,0,0,0,1.2,1.2,250,Yes
-8HP (Install),400,1,None,1,0,0,0,1.2,1.2,500,Yes
-8LK (Install),800,1,None,1,0,0,0,1.2,1.2,125,Yes
-8MK (Install),300,1,None,1,0,0,0,1.2,1.2,250,Yes
-7 or 9HK (Install),600,1,None,1,0,0,0,1.2,1.2,500,Yes
-8HK (Install),100,1,None,1,0,0,0,1.2,1.2,500,Yes
-6MP (Install),300,1,None,1,0,0,0,1.2,1.2,375,Yes
-6MK (Install),700,1,None,1,0,0,0,1.2,1.2,375,Yes
-6HP (Install) (1 hit),100,1,None,1,0,0,0,1.2,1.2,312,Yes
-6HP (Install),300,1,None,1,0,0,0,1.2,1.2,625,Yes
-4HK (Install) (1 hit),600,1,None,1,0,0,0,1.2,1.2,375,Yes
-4HK (Install),600,1,None,1,0,0,0,1.2,1.2,875,Yes
-5MP target combo (2 hit) (install),400,1,>4HK (5MP target combo (2 hit) (install)),1,0,0,0,1.2,1.2,375,Yes
-5MP target combo (3 hits) (install),400,1,>4HK (5MP target combo (3 hits) (install)),1,0,0,0,1.2,1.2,375,Yes
->4HK (5MP target combo (2 hit) (install)),500,1,None,1,0,0,0,1.2,1.2,250,No
->4HK (5MP target combo (3 hits) (install)),500,1,>5HP (5MP target combo (3 hits) (install)),1,0,0,0,1.2,1.2,250,No
->5HP (5MP target combo (3 hits) (install)),480,1,None,1,0,0,0,1.2,1.2,250,No
-214LK,600,1,None,1,0,0,0,1.2,1.2,2000,Yes
-214MK,600,1,None,1,0,0,0,1.2,1.2,2000,Yes
-214HK,500,1,None,1,0,0,0,1.2,1.2,2000,Yes
-214KK,600,1,None,1,0,0,0,1.2,1.2,-20000,Yes
-236LK,400,1,None,1,0,0,0,1.2,1.2,1000,Yes
-236LK Enhanced,600,2,None,0.8,0,0,0,1.2,1.2,1000,Yes
-236LKMK,800,1,None,1,0,0,0,1.2,1.2,-20000,Yes
-236MK,600,2,None,0.8,0,0,0,1.2,1.2,2000,Yes
-236MK Enhanced,600,2,None,0.8,0,0,0,1.2,1.2,2000,Yes
-236LKHK,800,2,None,0.8,0,0,0,1.2,1.2,-20000,Yes
-236HK,1000,1,None,1,0,0,0,1.2,1.2,1000,Yes
-236HK Enhanced (1 hit),700,1,None,1,0,0,0,1.2,1.2,1000,Yes
-236HK Enhanced,1200,1,None,1,0,0,0,1.2,1.2,2000,Yes
-236MKHK (1 hit),400,1,None,0.8,0,0,0,1.2,1.2,-20000,Yes
-236MKHK (2 hits),800,1,None,0.8,0,0,0,1.2,1.2,-20000,Yes
-236MKHK,1200,1,None,0.8,0,0,0,1.2,1.2,-20000,Yes
-236MKHK (chained) (1 hit),400,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
-236MKHK (chained) (2 hits),800,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
-236MKHK (chained),1200,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
-623LP,800,1,None,1,0,0,0,1.2,1.2,2000,Yes
-623MP,1200,1,None,1,0,0,0,1.2,1.2,2000,Yes
-623HP,1200,1,None,1,0,0,0,1.2,1.2,2000,Yes
-623PP,1600,1,None,1,0,0,0,1.2,1.2,-20000,Yes
-214K (air),400,1,None,1,0,0,0,1.2,1.2,2000,Yes
-214KK (air),300,1,None,1,0,0,0,1.2,1.2,-20000,Yes
-214K > K (air),400,1,> K (214K > K (air)),1,0,0,0,1.2,1.2,2000,Yes
-214KK > K (air),300,1,> K (214KK > K (air)),1,0,0,0,1.2,1.2,-20000,Yes
-> K (214K > K (air)),1600,1,None,1,0,0,0,1.2,1.2,1800,No
-> K (214KK > K (air)),1200,1,None,1,0,0,0,1.2,1.2,0,No
-SA1,1800,1,None,1,0,0,0.3,1.2,1.2,0,Yes
-SA1 Enhanced,2100,1,None,1,0,0,0.3,1.2,1.2,0,Yes
-SA2,0,0,None,1,0,0,0.4,1.2,1.2,0,Yes
-SA2 (hold),300,1,None,1,0,0,0.4,1.2,1.2,0,Yes
-SA3,4000,1,None,1,0,0,0.5,1.2,1.2,0,Yes
-CA,4500,1,None,1,0,0,0.5,1.2,1.2,0,Yes
-Drive Impact,800,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
-Drive Impact Wall Splat,800,1,None,0.8,0,0,0,1.2,1.2,-10000,Yes
-Drive Impact Wall Splat (blocked),0,0,None,1,0,0,0,1.2,1.2,-10000,Yes
-Drive Rush Cancel,0,0,None,1,0,0,0,1.2,1.2,-30000,Yes
-Drive Rush,0,0,None,1,0,0,0,1.2,1.2,-10000,Yes
+Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,Immediate scaling,Min scaling,Counter multiplier,Punish multiplier,Counter Hit,Punish Counter,Super gain,Drive gain,Visible?
+5LP,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+5MP,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+5HP,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+5LK,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+5MK (1 hit),Normal,400,1,None,1,0,0,0,1.2,1.2,480,480,350,1000,Yes
+5MK,Normal,700,1,None,1,0,0,0,1.2,1.2,840,840,1150,2000,Yes
+5HK,Normal,900,1,None,0.8,0,0,0,1.2,1.2,1080,1080,1000,4000,Yes
+2LP,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+2MP,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+2HP,Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,2000,Yes
+2LK,Normal,200,1,None,0.8,0,0,0,1.2,1.2,240,240,300,250,Yes
+2MK,Normal,500,1,None,0.8,0,0,0,1.2,1.2,600,600,600,1000,Yes
+2HK,Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,3000,Yes
+8LP,Normal,300,1,None,1,0,0,0,1.2,1.2,360,360,300,500,Yes
+8MP,Normal,500,1,None,1,0,0,0,1.2,1.2,600,600,500,1000,Yes
+8HP,Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,2000,Yes
+8LK,Normal,300,1,None,1,0,0,0,1.2,1.2,360,360,300,500,Yes
+8MK,Normal,500,1,None,1,0,0,0,1.2,1.2,600,600,500,1000,Yes
+7 or 9HK,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+8HK,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+6MP,Command Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+6MK,Command Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,700,1500,Yes
+6HP,Command Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2500,Yes
+4HK,Command Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,3500,Yes
+5MP > 4HK target combo,Target Combo,600,1,> 4HK (5MP > 4HK target combo),1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+5MP > 4HK > 5HP target combo,Target Combo,600,1,> 4HK (5MP > 4HK > 5HP target combo),1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+> 4HK (5MP > 4HK target combo),Target Combo,500,1,None,1,0,0,0,1.2,1.2,600,600,1000,1000,No
+> 4HK (5MP > 4HK > 5HP target combo),Target Combo,500,1,> 5HP (5MP > 4HK > 5HP target combo),1,0,0,0,1.2,1.2,600,600,1000,1000,No
+> 5HP (5MP > 4HK > 5HP target combo),Target Combo,600,1,None,1,0,0,0,1.2,1.2,720,720,500,1000,No
+214LK,Special,600,1,None,1,0,0,0,1.2,1.2,720,720,600,2000,Yes
+214MK,Special,600,1,None,1,0,0,0,1.2,1.2,720,720,600,2000,Yes
+214HK,Special,500,1,None,1,0,0,0,1.2,1.2,600,600,600,2000,Yes
+236LK,Special,400,1,None,1,0,0,0,1.2,1.2,480,480,600,1000,Yes
+236MK,Special,600,2,None,0.8,0,0,0,1.2,1.2,720,720,800,2000,Yes
+236HK,Special,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,700,1000,Yes
+236LK Enhanced,Special,600,2,None,0.8,0,0,0,1.2,1.2,720,720,600,1000,Yes
+236MK Enhanced,Special,600,2,None,0.8,0,0,0,1.2,1.2,720,720,800,2000,Yes
+236HK Enhanced (1 hit),Special,700,1,None,1,0,0,0,1.2,1.2,840,840,400,1000,Yes
+236HK Enhanced,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,700,2000,Yes
+623LP,Special,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+623MP,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,2000,Yes
+623HP,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,2000,Yes
+214K (air),Special,400,1,None,1,0,0,0,1.2,1.2,480,480,600,2000,Yes
+214K > K (air),Special,400,1,> K (214K > K (air)),1,0,0,0,1.2,1.2,480,480,600,2000,Yes
+> K (214K > K (air)),Special,1600,1,None,1,0,0,0,1.2,1.2,1920,1920,600,1800,No
+214KK,Overdrive,600,1,None,1,0,0,0,1.2,1.2,720,720,600,-20000,Yes
+236LKMK,Overdrive,800,1,None,1,0,0,0,1.2,1.2,960,960,600,-20000,Yes
+236LKHK,Overdrive,800,2,None,0.8,0,0,0,1.2,1.2,960,960,800,-20000,Yes
+236MKHK,Overdrive,1200,1,None,0.8,0,0,0,1.2,1.2,1440,1440,800,-20000,Yes
+236MKHK (1 hit),Overdrive,400,1,None,0.8,0,0,0,1.2,1.2,480,480,300,-20000,Yes
+236MKHK (2 hits),Overdrive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,600,-20000,Yes
+> LK (236KK),Overdrive,800,1,None,1,0,0,0,1.2,1.2,960,960,600,-10000,Yes
+> MK (236KK),Overdrive,800,2,None,0.8,0,0,0,1.2,1.2,960,960,800,-10000,Yes
+> HK (236KK),Overdrive,1200,1,None,0.8,0,0,0,1.2,1.2,1440,1440,800,-10000,Yes
+> HK (236KK) (1 hit),Overdrive,400,1,None,0.8,0,0,0,1.2,1.2,480,480,300,-10000,Yes
+> HK (236KK) (2 hits),Overdrive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,600,-10000,Yes
+623PP,Overdrive,1600,1,None,1,0,0,0,1.2,1.2,1920,1920,1000,-20000,Yes
+214KK (air),Overdrive,300,1,None,1,0,0,0,1.2,1.2,360,360,600,-20000,Yes
+214KK > K (air),Overdrive,300,1,> K (214KK > K (air)),1,0,0,0,1.2,1.2,360,360,600,-20000,Yes
+> K (214KK > K (air)),Overdrive,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,600,0,No
+5LP (Install),Install,100,1,None,0.8,0,0,0,1.2,1.2,120,120,0,62,Yes
+5MP (Install),Install,400,1,None,1,0,0,0,1.2,1.2,480,480,0,375,Yes
+5HP (Install),Install,600,1,None,1,0,0,0,1.2,1.2,720,720,0,500,Yes
+5LK (Install),Install,100,1,None,0.8,0,0,0,1.2,1.2,120,120,0,62,Yes
+5MK (Install) (1 hit),Install,300,1,None,1,0,0,0,1.2,1.2,360,360,0,250,Yes
+5MK (Install),Install,500,1,None,1,0,0,0,1.2,1.2,600,600,0,500,Yes
+5HK (Install),Install,700,1,None,0.8,0,0,0,1.2,1.2,840,840,0,1000,Yes
+2LP (Install),Install,100,1,None,0.8,0,0,0,1.2,1.2,120,120,0,62,Yes
+2MP (Install),Install,400,1,None,1,0,0,0,1.2,1.2,480,480,0,375,Yes
+2HP (Install),Install,700,1,None,1,0,0,0,1.2,1.2,840,840,0,500,Yes
+2LK (Install),Install,100,1,None,0.8,0,0,0,1.2,1.2,120,120,0,62,Yes
+2MK (Install),Install,300,1,None,0.8,0,0,0,1.2,1.2,360,360,0,250,Yes
+2HK (Install),Install,700,1,None,1,0,0,0,1.2,1.2,840,840,0,750,Yes
+8LP (Install),Install,400,1,None,1,0,0,0,1.2,1.2,480,480,0,125,Yes
+8MP (Install),Install,400,1,None,1,0,0,0,1.2,1.2,480,480,0,250,Yes
+8HP (Install),Install,400,1,None,1,0,0,0,1.2,1.2,480,480,0,500,Yes
+8LK (Install),Install,800,1,None,1,0,0,0,1.2,1.2,960,960,0,125,Yes
+8MK (Install),Install,300,1,None,1,0,0,0,1.2,1.2,360,360,0,250,Yes
+7 or 9HK (Install),Install,600,1,None,1,0,0,0,1.2,1.2,720,720,0,500,Yes
+8HK (Install),Install,100,1,None,1,0,0,0,1.2,1.2,120,120,0,500,Yes
+6MP (Install),Install,300,1,None,1,0,0,0,1.2,1.2,360,360,0,375,Yes
+6MK (Install),Install,700,1,None,1,0,0,0,1.2,1.2,840,840,0,375,Yes
+6HP (Install),Install,300,1,None,1,0,0,0,1.2,1.2,360,360,0,625,Yes
+4HK (Install),Install,600,1,None,1,0,0,0,1.2,1.2,720,720,0,875,Yes
+5MP > 4HK target combo (install),Install,400,1,> 4HK (5MP > 4HK target combo) (install),1,0,0,0,1.2,1.2,480,480,0,375,Yes
+5MP > 4HK > 5HP target combo (install),Install,400,1,> 4HK (5MP > 4HK > 5HP target combo) (install),1,0,0,0,1.2,1.2,480,480,0,375,Yes
+> 4HK (5MP > 4HK target combo) (install),Install,500,1,None,1,0,0,0,1.2,1.2,600,600,0,250,No
+> 4HK (5MP > 4HK > 5HP target combo) (install),Install,500,1,> 5HP (5MP > 4HK > 5HP target combo) (install),1,0,0,0,1.2,1.2,600,600,0,250,No
+> 5HP (5MP > 4HK > 5HP target combo) (install),Install,480,1,None,1,0,0,0,1.2,1.2,576,576,0,250,No
+SA1,Super,1800,1,None,1,0,0,0.3,1.2,1.2,2160,2160,-10000,0,Yes
+SA1 Enhanced,Super,2100,1,None,1,0,0,0.3,1.2,1.2,2520,2520,-10000,0,Yes
+SA2,Super,0,0,None,1,0,0,0.4,1.2,1.2,0,0,-20000,0,Yes
+SA2 (hold),Super,300,1,None,1,0,0,0.4,1.2,1.2,360,360,-20000,0,Yes
+SA3,Super,4000,1,None,1,0,0,0.5,1.2,1.2,4800,4800,-30000,0,Yes
+CA,Super,4500,1,None,1,0,0,0.5,1.2,1.2,5400,5400,-30000,0,Yes
+Raw Drive Impact,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,0,-10000,Yes
+Punish Drive Impact,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,3000,-10000,Yes
+Drive Impact Wall Splat,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,0,-10000,Yes
+Drive Impact Wall Splat (blocked),Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-10000,Yes
+Drive Rush Cancel,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-30000,Yes
+Drive Rush,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-10000,Yes
+2 Frame Microwalk,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,60,Yes

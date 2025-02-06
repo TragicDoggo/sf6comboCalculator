@@ -1,0 +1,113 @@
+Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,Immediate scaling,Min scaling,Counter multiplier,Punish multiplier,Counter Hit,Punish Counter,Super gain,Drive gain,Visible?
+5LP,Normal,400,1,None,0.8,0,0,0,1.2,1.2,480,480,300,250,Yes
+5MP,Normal,700,1,None,1,0,0,0,1.2,1.2,840,840,500,1500,Yes
+5HP,Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2000,Yes
+5HP (hold),Normal,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,3000,Yes
+5LK,Normal,400,1,None,0.8,0,0,0,1.2,1.2,480,480,300,250,Yes
+5MK,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,700,2000,Yes
+5HK,Normal,1000,1,None,0.9,0,0,0,1.2,1.2,1200,1200,1000,3000,Yes
+5HK (hold),Normal,1200,1,None,0.9,0,0,0,1.2,1.2,1440,1440,1000,3000,Yes
+2LP,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+2MP,Normal,700,1,None,1,0,0,0,1.2,1.2,840,840,500,1500,Yes
+2HP,Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,2500,Yes
+2HP (hold),Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,3000,Yes
+2LK,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+2MK,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,600,2000,Yes
+2HK,Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2500,Yes
+2HK (hold),Normal,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,3000,Yes
+8LP,Normal,300,1,None,1,0,0,0,1.2,1.2,360,360,300,500,Yes
+8MP,Normal,700,1,None,1,0,0,0,1.2,1.2,840,840,500,1000,Yes
+8HP,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+8HP (hold),Normal,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1000,2000,Yes
+8LK,Normal,300,1,None,1,0,0,0,1.2,1.2,360,360,300,500,Yes
+8MK,Normal,500,1,None,1,0,0,0,1.2,1.2,600,600,500,1000,Yes
+8HK,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+8HK (hold),Normal,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1000,2000,Yes
+2HP (air),Command Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+2HP (air) (hold),Command Normal,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1000,2000,Yes
+6MP,Command Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,500,1000,Yes
+3HP,Command Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,1000,Yes
+3HP (hold),Command Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,500,1500,Yes
+4HP,Command Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,2000,Yes
+4HP (hold),Command Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,500,2500,Yes
+6HK,Command Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,2000,Yes
+6HK (hold),Command Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,3000,Yes
+5LP > 5LP target combo,Target Combo,400,1,> 5LP (5LP > 5LP target combo),0.8,0,0,0,1.2,1.2,480,480,300,250,Yes
+> 5LP (5LP > 5LP target combo),Target Combo,600,1,None,0.9,-0.05,0,0,1.2,1.2,720,720,1000,1000,No
+5MP > 5MP target combo,Target Combo,700,1,> 5MP (5MP > 5MP target combo),1,0,0,0,1.2,1.2,840,840,500,1500,Yes
+> 5MP (5MP > 5MP target combo),Target Combo,600,1,None,1,0,0,0,1.2,1.2,720,720,1000,1500,No
+5HP > 5HP target combo,Target Combo,1000,1,> 5HP (5HP > 5HP target combo),1,0,0,0,1.2,1.2,1200,1200,1000,2000,Yes
+> 5HP (5HP > 5HP target combo),Target Combo,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2000,No
+5HP (hold) > 5HP target combo,Target Combo,1200,1,> 5HP (5HP (hold) > 5HP target combo),1,0,0,0,1.2,1.2,1440,1440,1000,3000,Yes
+> 5HP (5HP (hold) > 5HP target combo),Target Combo,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2000,No
+6MP > 5HP target combo,Target Combo,800,1,> 5HP (6MP > 5HP target combo),1,0,0,0,1.2,1.2,960,960,500,1000,Yes
+> 5HP (6MP > 5HP target combo),Target Combo,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,No
+6MP > 5HK target combo,Target Combo,800,1,> 5HK (6MP > 5HK target combo),1,0,0,0,1.2,1.2,960,960,500,1000,Yes
+> 5HK (6MP > 5HK target combo),Target Combo,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2500,No
+3HP > 3HP target combo,Target Combo,900,1,> 3HP (3HP > 3HP target combo),1,0,0,0,1.2,1.2,1080,1080,500,1000,Yes
+> 3HP (3HP > 3HP target combo),Target Combo,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,1000,No
+3HP (hold) > 3HP target combo,Target Combo,1000,1,> 3HP (3HP (hold) > 3HP target combo),1,0,0,0,1.2,1.2,1200,1200,500,1500,Yes
+> 3HP (3HP (hold) > 3HP target combo),Target Combo,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,1000,No
+6HK > 6HK target combo,Target Combo,900,1,> 6HK (6HK > 6HK target combo),1,0,0,0,1.2,1.2,1080,1080,1000,2000,Yes
+> 6HK (6HK > 6HK target combo),Target Combo,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2500,No
+6HK (hold) > 6HK target combo,Target Combo,1000,1,> 6HK (6HK (hold) > 6HK target combo),1,0,0,0,1.2,1.2,1200,1200,1000,3000,Yes
+> 6HK (6HK (hold) > 6HK target combo),Target Combo,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,2500,No
+8MP > 8MP target combo,Target Combo,700,1,> 8MP (8MP > 8MP target combo),1,0,0,0,1.2,1.2,840,840,500,1000,Yes
+> 8MP (8MP > 8MP target combo),Target Combo,800,1,None,1,0,0,0,1.2,1.2,960,960,500,1000,No
+236LP,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1150,2000,Yes
+236MP,Special,1400,1,None,1,0,0,0,1.2,1.2,1680,1680,1150,2000,Yes
+236HP,Special,1600,1,None,1,0,0,0,1.2,1.2,1920,1920,1150,2000,Yes
+236LP (hold),Special,2400,1,None,1,0,0,0,1.2,1.2,2880,2880,2650,4000,Yes
+236MP (hold),Special,2600,1,None,1,0,0,0,1.2,1.2,3120,3120,2650,4000,Yes
+236HP (hold),Special,2800,1,None,1,0,0,0,1.2,1.2,3360,3360,2650,4000,Yes
+214LP,Special,600,1,None,1,0,0,0,1.2,1.2,720,720,575,1250,Yes
+214MP,Special,700,1,None,1,0,0,0,1.2,1.2,840,840,575,1250,Yes
+214HP,Special,800,1,None,1,0,0,0,1.2,1.2,960,960,575,1250,Yes
+214LP > 6P,Special,600,1,> 6P (214LP > 6P),1,0,0,0,1.2,1.2,720,720,575,1250,Yes
+> 6P (214LP > 6P),Special,600,1,None,1,0,0,0,1.2,1.2,720,720,575,1250,No
+214MP > 6P,Special,700,1,> 6P (214MP/HP > 6P),1,0,0,0,1.2,1.2,840,840,575,1250,Yes
+214HP > 6P,Special,800,1,> 6P (214MP/HP > 6P),1,0,0,0,1.2,1.2,960,960,575,1250,Yes
+> 6P (214MP/HP > 6P),Special,600,2,None,1,0,0,0,1.2,1.2,720,720,575,1250,No
+623LP,Special,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1150,3000,Yes
+623MP,Special,1600,1,None,1,0,0,0,1.2,1.2,1920,1920,1150,3000,Yes
+623HP,Special,1700,1,None,1,0,0,0,1.2,1.2,2040,2040,1150,3000,Yes
+236LK,Special,1400,1,None,1,0,0,0,1.2,1.2,1680,1680,1150,2000,Yes
+236MK,Special,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1150,2000,Yes
+236HK,Special,1600,1,None,1,0,0,0,1.2,1.2,1920,1920,1150,2000,Yes
+214K (counter),Special,700,1,None,1,0,0,0,1.2,1.2,840,840,500,1000,Yes
+214K > P,Special,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,1000,Yes
+214K > P > P,Special,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,1000,Yes
+> P (214K/KK > P > P),Special,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1150,1500,No
+236PP,Overdrive,1700,1,None,0.7,0,0,0,1.2,1.2,2040,2040,1150,-20000,Yes
+236PP (hold),Overdrive,2900,1,None,0.7,0,0,0,1.2,1.2,3480,3480,2650,-20000,Yes
+214PP,Overdrive,600,1,None,1,0,0,0,1.2,1.2,720,720,575,-20000,Yes
+214PP > 6P,Overdrive,600,1,> 6P (214PP > 6P),1,0,0,0,1.2,1.2,720,720,575,-20000,Yes
+> 6P (214PP > 6P),Overdrive,600,2,None,1,0,0,0,1.2,1.2,720,720,575,0,No
+623PP,Overdrive,1400,1,None,1,0,0,0,1.2,1.2,1680,1680,1150,-20000,Yes
+236KK,Overdrive,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1150,-20000,Yes
+214KK (counter),Overdrive,700,1,None,1,0,0,0,1.2,1.2,840,840,500,-20000,Yes
+214K > K,Overdrive,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,2000,Yes
+214K > LPLK,Overdrive,2500,1,None,1,0,0,0,1,1.15,2500,2875,3000,2000,Yes
+236KK > P,Overdrive,0,1,> P (236KK > P),1,0,0,0,1.2,1.2,0,0,0,-20000,Yes
+> P (236KK > P),Overdrive,900,1,None,1,0,0,0,1.2,1.2,1080,1080,500,1000,No
+236KK > P > P,Overdrive,0,1,> P (236KK > P > P),1,0,0,0,1.2,1.2,0,0,0,-20000,Yes
+> P (236KK > P > P),Overdrive,900,1,> P (214K/KK > P > P),1,0,0,0,1.2,1.2,1080,1080,500,1000,No
+236KK > K,Overdrive,0,1,> K (236KK > K),1,0,0,0,1.2,1.2,0,0,0,-20000,Yes
+> K (236KK > K),Overdrive,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,2000,No
+236KK > LPLK,Overdrive,0,1,> LPLK (236KK > LPLK),1,0,0,0,1.2,1.2,0,0,0,-20000,Yes
+> LPLK (236KK > LPLK),Overdrive,2500,1,None,1,0,0,0,1,1.15,2500,2875,3000,2000,No
+SA1,Super,2200,1,None,1,0,0,0.3,1.2,1.2,2640,2640,-10000,0,Yes
+SA1 (hold),Super,2900,1,None,1,0,0,0.3,1.2,1.2,3480,3480,-10000,0,Yes
+SA1 (hold) (far),Super,2600,1,None,1,0,0,0.3,1.2,1.2,3120,3120,-10000,0,Yes
+SA1 (counter),Super,2640,1,None,1,0,0,0.3,1.2,1.2,3168,3168,-10000,0,Yes
+SA2,Super,3000,1,None,1,0,-0.15,0.4,1.2,1.2,3600,3600,-20000,0,Yes
+SA2 (whiff 1st hit),Super,2500,1,None,1,0,-0.15,0.4,1.2,1.2,3000,3000,-20000,0,Yes
+SA3,Super,4000,1,None,1,0,0,0.5,1.2,1.2,4800,4800,-30000,0,Yes
+CA,Super,4500,1,None,1,0,0,0.5,1.2,1.2,5400,5400,-30000,0,Yes
+Raw Drive Impact,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,0,-10000,Yes
+Punish Drive Impact,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,3000,-10000,Yes
+Drive Impact Wall Splat,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,0,-10000,Yes
+Drive Impact Wall Splat (blocked),Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-10000,Yes
+Drive Rush Cancel,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-30000,Yes
+Drive Rush,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-10000,Yes
+2 Frame Microwalk,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,60,Yes

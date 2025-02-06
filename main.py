@@ -12,17 +12,21 @@ def main_page():
     state = {
         # variables for loading moves
         'file_name': '',
+        'all_moves': {},
         'available_moves':[],
         'move_list': [],
+        'selected_chips': {},
+        'chips_selected':False,
         'character': 'None',
-        'move_type':'Normal',
+        'move_types':[],
         #variables for calculating damage/scaling/drive gauge
-        'counter': 'No Counter',
+        'counter': 'None',
         'perfect_parry': False,
         'cancelled_special': False,
         'final_damage': 0,
         'additional_damage': 0,
         'drive_gauge': 60000.0,
+        'super_gauge': 30000.0,
         #combo_data contains  cleaned up data for the calculation per-move
         'combo_data': [{'Move name': None, 'Final damage': None, 'Final scaling': None, 'Route scaling': None,
                         'Drive Rush scaling': None, 'Counts as x hits': None, 'Immediate scaling': None,
@@ -31,7 +35,7 @@ def main_page():
         'combo_storage': {},
         # string storing svg data for the drive gauge to update
         'drive_gauge_svg': '''
-                            <svg viewBox="0 0 680 37" width="220" height="20" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 770 35" width="220" height="10" xmlns="http://www.w3.org/2000/svg">
                             <style>
                                 .s6 { fill: #b3b816;stroke: #ebec24;stroke-miterlimit:100;stroke-width: 5 } 
                                 .s5 { fill: #a7b919;stroke: #e7f035;stroke-miterlimit:100;stroke-width: 5 } 
@@ -57,12 +61,76 @@ def main_page():
 
                             </svg>
                             ''',
+        # string storing svg data for the drive gauge to update
+        'super_gauge_svg': '''
+                          <svg viewbox ='0 0 700 70' width=352 height=60 xmlns="http://www.w3.org/2000/svg"> 
+                              <defs>
+                                <filter id="blur1">
+                                      <feGaussianBlur stdDeviation="1.5" in="SourceGraphic"/>
+                                </filter>
+                                <filter id="blur2">
+                                      <feGaussianBlur stdDeviation="1" in="SourceStroke"/>
+                                </filter>
+                                <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
+                                  <stop offset="0.2" stop-color="#ffffff" stop-opacity=".9"/>                                
+                                  <stop offset="0.5" stop-color="#ffffff" stop-opacity=".2"/>
+                                  <stop offset="0.8" stop-color="#ffffff" stop-opacity=".9"/>
+                                </linearGradient>
+                                <linearGradient id="grad2" x2="1">
+                                  <stop offset="0.5" stop-color="#ce207a"/>
+                                  <stop offset="1" stop-color="#ffd4ff"/>
+                                </linearGradient>
+                                <linearGradient id="grad3" x2="1">
+                                  <stop offset="0.2" stop-color="#ce207a"/>
+                                  <stop offset="0.5" stop-color="#ffd4ff"/>
+                                  <stop offset="0.8" stop-color="#ce207a"/>
+                                </linearGradient> 
+                              </defs>
+                              <style>
+                                .glow {filter: url(#blur1)}
+                                .glow2 {filter: url(#blur2)}
+                                .outline {stroke: url(#grad1)}
+                              </style>
+                              <g id="super bar">
+                                <polygon id="bar glow" class="glow" fill="#ce207a" fill-opacity="30%" points="0,5 318,5 353,56 35,56"/>
+                                <polygon id="bar background" fill="#grey" fill-opacity="30%" points="10,10 316,10 342,50 38,50"/>
+                                <polygon id="bar filling" fill="url(#grad3)" points="10,10 316,10 342,50 38,50"/>
+                                <polygon id="bar outline" stroke="url(#grad1)" stroke-width=2px fill='transparent' points="10,10 316,10 342,50 38,50"/>
+                              </g>
+                              </svg>
+                        ''',
         # character UI colours and icons
-        'char_custom_dict': {'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'], 'A.K.I.': ['#6b254b', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/A.K.I..png'], 'Akuma': ['#8e1f11', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Akuma.png'], 'Blanka': ['#036c03', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Blanka.png'], 'Cammy': ['#355f97', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Cammy.png'], 'Chun-Li': ['#6483de', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Chun-Li.png'], 'Dee Jay': ['#008b0c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dee Jay.png'], 'Dhalsim': ['#d7a403', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dhalsim.png'], 'Ed': ['#086b7a', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ed.png'], 'E.Honda': ['#a90600', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/E.Honda.png'], 'Guile': ['#316326', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Guile.png'], 'Jamie': ['#bc9c0e', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Jamie.png'], 'JP': ['#3c2a51', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/JP.png'], 'Juri': ['#601199', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Juri.png'], 'Ken': ['#bd1613', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ken.png'], 'Kimberly': ['#7584', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Kimberly.png'], 'Lily': ['#d78076', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Lily.png'], 'Luke': ['#4628c9', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Luke.png'], 'M. Bison': ['#61346d', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/M. Bison.png'], 'Manon': ['#796dc7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Manon.png'], 'Marisa': ['#b90302', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Marisa.png'], 'Rashid': ['#cb7c1c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Rashid.png'], 'Ryu': ['#863532', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ryu.png'], 'Terry': ['#8e1b18', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Terry.png'], 'Zangief': ['#c91212', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Zangief.png']},
+        'char_custom_dict': {'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'],
+                             'A.K.I.': ['#6b254b', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/A.K.I..png'],
+                             'Akuma': ['#8e1f11', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Akuma.png'],
+                             'Blanka': ['#036c03', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Blanka.png'],
+                             'Cammy': ['#355f97', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Cammy.png'],
+                             'Chun-Li': ['#6483de', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Chun-Li.png'],
+                             'Dee Jay': ['#008b0c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dee Jay.png'],
+                             'Dhalsim': ['#d7a403', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dhalsim.png'],
+                             'Ed': ['#086b7a', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ed.png'],
+                             'E.Honda': ['#a90600', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/E.Honda.png'],
+                             'Guile': ['#316326', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Guile.png'],
+                             'Jamie': ['#bc9c0e', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Jamie.png'],
+                             'JP': ['#3c2a51', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/JP.png'],
+                             'Juri': ['#601199', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Juri.png'],
+                             'Ken': ['#bd1613', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ken.png'],
+                             'Kimberly': ['#fa77b7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Kimberly.png'],
+                             'Lily': ['#d78076', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Lily.png'],
+                             'Luke': ['#4628c9', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Luke.png'],
+                             'M.Bison': ['#61346d', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/M.Bison.png'],
+                             'Manon': ['#796dc7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Manon.png'],
+                             'Marisa': ['#b90302', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Marisa.png'],
+                             'Rashid': ['#cb7c1c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Rashid.png'],
+                             'Ryu': ['#863532', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ryu.png'],
+                             'Terry': ['#8e1b18', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Terry.png'],
+                             'Zangief': ['#c91212', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Zangief.png']},
          # character specific variables
         'character_specifics': {'Jamie': 2,
-                                'A.K.I.': 0},
-
+                                'A.K.I.': 0,
+                                'Kimberly' : False},
+        'current_input' : '',
+        'option_index' : -1,
         # faq term info
         'faq_tables': {'term_columns': [{'name': 'name', 'label': 'Name', 'field': 'name', 'sortable': False},
                                                 {'name': 'meaning', 'label': 'Meaning', 'field': 'meaning',
@@ -83,67 +151,101 @@ def main_page():
 
     def characterSpecificStuff(state):
 
-        def changeAkiPoison(slider_value, label):
+        def changeAkiPoison(slider_value, label,state):
             state['additional_damage'] = math.floor(slider_value * 60)
             poison_text = state['additional_damage']
             label.set_text(f'Poison damage: {poison_text}')
-            calculateDamage(state)
+            calculateData(state)
 
-        def changeJamieScaling(radio_value):
+        def changeJamieScaling(radio_value,state):
             state['character_specifics']['Jamie'] = radio_value
-            calculateDamage(state)
+            filterMoves(move_type_toggle.value,state)
+            calculateData(state)
+
+        def kimBuff(toggle_value,state):
+            state['character_specifics']['Kimberly'] = toggle_value
+            calculateData(state)
+
 
         char_specific_row.clear()
         if state['character'] == 'Jamie':
             with char_specific_row:
-                ui.select(label='Drink level', options=[0, 1, 2, 3, 4], value=state['character_specifics']['Jamie'],on_change=lambda e: changeJamieScaling(e.value)).style('width: 100px')
+                ui.select(label='Drink level', options=[0, 1, 2, 3, 4], value=state['character_specifics']['Jamie'],on_change=lambda e: changeJamieScaling(e.value,state)).style('width: 100px')
 
         elif state['character'] == 'A.K.I.':
             with char_specific_row:
                 ui.label('Estimated seconds poisoned:').style('height: 40px')
-                poison = ui.slider(min=0.0, max=10.0, step=0.1, value=0,
-                                   on_change=lambda e: changeAkiPoison(e.value, poison_label)).props('label-always')
+                poison = ui.slider(min=0.0, max=10.0, step=0.1, value=0).props('label-always').on('update:model-value',lambda e: changeAkiPoison(e.args, poison_label,state),throttle=1.0, leading_events=False)
                 poison_label = ui.label('Poison damage: 0')
+
+        elif state['character'] == 'Kimberly':
+            with char_specific_row:
+                ui.checkbox('SA3 buff enabled',value=state['character_specifics']['Kimberly'], on_change= lambda e: kimBuff(e.value,state))
         else:
             with char_specific_row:
                 ui.label('No character specific options available')
 
     def characterSelected(state, selected_character):
+        move_dropdown.set_value(None)
         state['character'] = selected_character
         state['additional_damage'] = 0
         state['character_specifics']['Jamie'] = 2
-        state['file_name'] = m.get_character(selected_character)
+        get_all_moves_data = m.get_all_moves_dict(selected_character)
+        state['all_moves'] = get_all_moves_data[0]
+        state['move_types'] = get_all_moves_data[1]
+        move_type_toggle.set_options(state['move_types'])
+        move_type_toggle.set_value(state['move_types'])
         clearList(state)
         ui.colors(primary=state['char_custom_dict'][state['character']][0]).update()
         character_portrait.set_source(state['char_custom_dict'][selected_character][1])
         character_label.set_content(f'###### **{selected_character}**')
-        filterMoves(state['move_type'],state)
         characterSpecificStuff(state)
+        filterMoves(state['move_types'],state)
         return selected_character
 
     def filterMoves(value,state):
-        state['move_type']=value
-        state['available_moves'] = m.get_moves(state['file_name'],state['move_type'])
+        state['available_moves'] = []
+        if value == []:
+            state['available_moves'] = list(state['all_moves'].keys())
+        else:
+            for move in state['all_moves'].keys():
+                if state['all_moves'][move]['Move type'] in value and state['all_moves'][move]['Visible?'] == 'Yes':
+                    if state['character'] == 'Jamie':
+                        if state['character_specifics']['Jamie'] in state['all_moves'][move]['Drink level']:
+                            state['available_moves'].append(move)
+                    else:
+                            state['available_moves'].append(move)
         move_dropdown.set_options(state['available_moves'])
 
-    def createChip(name):
+    def selectInput(current_key):
+        current_move = None
+        blocked_keys = ['Enter','ArrowDown','ArrowUp','ArrowRight','ArrowLeft','Tab']
+        if current_key not in blocked_keys:
+            move_dropdown.run_method('setOptionIndex', 0)
+
+    def createChip(name,selected,state):
+        move_type = state['all_moves'][name]['Move type']
         if name:
             try:
                 # Default color
                 colour = 'blue-grey-5'
-                colours = {
-                    re.compile(r'\d{2,3}[PK][PK]|\d{3}[LMH][KP][LMH][KP]'): 'orange-4',  # OD moves
+                colours_keywords = {
+                    'Overdrive': 'orange-4',  # OD moves
+                    'Super': 'deep-orange-6',  # Supers
+                    'Drive': 'light-green-6'  # Drive gauge stuff
+                }
+                colours_regex = {
                     re.compile(r'\d.*L[KP]'): 'light-blue-11',  # Lights
                     re.compile(r'\d.*M[KP]'): 'amber-4',  # Mediums
                     re.compile(r'\d.*H[KP]'): 'red-5',  # Heavies
-                    re.compile(r'SA[123]|CA$'): 'deep-orange-6',  # Supers
-                    re.compile(r'Drive'): 'light-green-6'  # Drive gauge stuff
                 }
-                # Determine the chip's color
-                for pattern, pattern_colour in colours.items():
-                    if pattern.match(name):
-                        colour = pattern_colour
-                        break
+                if move_type in colours_keywords.keys():
+                    colour = colours_keywords[move_type]
+                else:
+                    for pattern, pattern_colour in colours_regex.items():
+                        if pattern.match(name):
+                            colour = pattern_colour
+                            break
                 # Create the chip
                 with chips:
                     new_move = ui.chip(
@@ -151,61 +253,216 @@ def main_page():
                         removable=True,
                         icon='sports_mma',
                         color=colour,
-                        on_value_change=lambda: removeMove(new_move)
+                        selected=selected,
+                        on_value_change=lambda: removeMove(new_move),selectable=True,on_selection_change= lambda: updateSelected(state)
                     ).props('square flat size=18px')
                 updateChips(state)
+                updateSelected(state)
             except Exception as e:
                 print(f'No move selected:{e}')
 
+    def updateSelected(state):
+        clear_button.set_text('Clear all')
+        state['chips_selected'] = False
+        for chip in chips:
+            chip.classes.clear()
+            if chip.selected:
+                chip.classes('ring-2 ring-slate-400 ring-offset-2')#'border-2 border-dashed  border-current')
+                clear_button.set_text('Clear')
+                state['chips_selected'] = True
+
+    def moveChipsUp():
+        chips_list = list(chips)
+        # enumerate creates tuples where i is the index and chip is the value at that index, e.g. (0,chip1)
+        selected_chips_indices = [i for i, chip in enumerate(chips_list) if chip.selected]
+        if 0 in selected_chips_indices:
+            return
+        for i in selected_chips_indices:
+            # if index isn't out of range and isn't next to another selected chip
+            if i >0:
+                chips_list[i], chips_list[i - 1] = chips_list[i - 1], chips_list[i]
+        chips.clear()
+        for chip in chips_list:
+            createChip(chip.text, chip.selected,state)
+
+    def moveChipsDown():
+        chips_list = list(chips)
+        #enumerate creates tuples where i is the index and chip is the value at that index, e.g. (0,chip1)
+        selected_chips_indices = [i for i, chip in enumerate(chips_list) if chip.selected]
+        if len(chips_list) -1 in selected_chips_indices:
+            return
+        for i in reversed(selected_chips_indices):
+            #if index isn't out of range and isn't next to another selected chip
+            if i < len(chips_list) -1:
+                chips_list[i], chips_list[i + 1] = chips_list[i + 1], chips_list[i]
+        chips.clear()
+        for chip in chips_list:
+            createChip(chip.text, chip.selected,state)
+
+    def duplicateMove():
+        for chip in chips:
+            if chip.selected:
+                createChip(chip.text, False,state)
+                chip.selected = False
+
     def updateChips(state):
         state['move_list'] = [chip.text for chip in chips]
-        calculateDamage(state)
+        calculateData(state)
 
     def removeMove(chip):
         chip.delete()
+        updateSelected(state)
+        updateChips(state)
+
+    def clearList(state):
+        chips_to_delete = []
+        if state['chips_selected']:
+            for chip in chips:
+                if chip.selected:
+                    chips_to_delete.append(chip)
+            for chip in chips_to_delete:
+                chip.delete()
+            clear_button.set_text('Clear all')
+            state['chips_selected'] = False
+        else:
+            chips.clear()
         updateChips(state)
 
     def updateCounter(state, value):
-        if value != 'Punish Counter':
+        if value != 'PC':
             updatePerfectParry(state, False)
             perfect_parry_checkbox.set_value(False)
         state['counter'] = value
-        counter_dict = {'No Counter': '#d5deee',
-                        'Counter': '#E2C900',
-                        'Punish Counter': '#FF5118'}
+        counter_dict = {'None': ['No Counter','#d5deee'],
+                        'CH':['Counter','#E2C900'],
+                        'PC':['Punish Counter','#FF5118']}
         chips_row.clear()
         with chips_row:
             ui.markdown('#### **Combo string**:').style('flex:1; min-width: 240px')
-            counter_chip = ui.chip(icon='undo', text=value, color=counter_dict[value]).props(
+            counter_chip = ui.chip(icon='undo', text=counter_dict[value][0], color=counter_dict[value][1]).props(
                 'flat square size=18px').style('justify-self:end')
-        calculateDamage(state)
+        calculateData(state)
 
     def updatePerfectParry(state, value):
         state['perfect_parry'] = value
         if value == True:
-            counter_radio.set_value('Punish Counter')
-        calculateDamage(state)
+            counter_radio.set_value('PC')
+        calculateData(state)
 
     def updateCancelledSpecial(state, value):
         state['cancelled_special'] = value
-        calculateDamage(state)
+        calculateData(state)
 
-    def calculateDamage(state):
-        move_dict = m.get_selected_moves_data(state['file_name'], state['move_list'])
+    def calculateData(state):
+        move_dict = m.get_selected_moves_data(state['all_moves'], state['move_list'])
+        state['drive_gauge'] = drive_slider.value
+        state['super_gauge'] = super_slider.value
         try:
             data = cc.comboCalculatorFunc(move_dict,state)
             state['final_damage'] = data[0] + state['additional_damage']
             state['combo_data'] = data[1]
-            state['drive_gauge'] = data[2]
+            state['super_gauge'] = data[2]
+            state['drive_gauge'] = data[3]
             updateTable(state)
-            calculateDriveGauge(state)
+            updateDriveGauge(state)
+            updateSuperGauge(state)
         except Exception as e:
             print(f'Calculator function error: {e}')
         with output_column:
             final_damage_number = state['final_damage']
             final_damage_label.set_content(f'#### Damage: **{final_damage_number}**')
 
-    def calculateDriveGauge(state):
+    def updateSuperGauge(state):
+        svg = ''
+        super_gauge_svg = state['super_gauge_svg']
+        current_super = int(state['super_gauge']/10000)
+        bar_percent = float(state['super_gauge'] - (current_super *10000))/10000
+        if bar_percent != 0:
+            marker_visibility = 100
+        else:
+            marker_visibility = 0
+        if current_super == 3:
+            super_gauge_svg = '''
+                                <svg viewbox ='0 0 700 70' width=352 height=60 xmlns="http://www.w3.org/2000/svg"> 
+                                 <defs>
+                                    <filter id="blur1">
+                                      <feGaussianBlur stdDeviation="1.5" in="SourceGraphic"/>
+                                </filter>
+                                <filter id="blur2">
+                                      <feGaussianBlur stdDeviation="1" in="SourceStroke"/>
+                                </filter>
+                                <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
+                                  <stop offset="0.2" stop-color="#ffffff" stop-opacity=".9"/>                                
+                                  <stop offset="0.5" stop-color="#ffffff" stop-opacity=".2"/>
+                                  <stop offset="0.8" stop-color="#ffffff" stop-opacity=".9"/>
+                                </linearGradient>
+                                <linearGradient id="grad2" x2="1">
+                                  <stop offset="0.5" stop-color="#ce207a"/>
+                                  <stop offset="1" stop-color="#ffd4ff"/>
+                                </linearGradient>
+                                <linearGradient id="grad3" x2="1">
+                                  <stop offset="0.2" stop-color="#ce207a"/>
+                                  <stop offset="0.5" stop-color="#ffd4ff"/>
+                                  <stop offset="0.8" stop-color="#ce207a"/>
+                                </linearGradient> 
+                              </defs>
+                              <style>
+                                .glow {filter: url(#blur1)}
+                                .glow2 {filter: url(#blur2)}
+                                .outline {stroke: url(#grad1)}
+                              </style>
+                              <g id="super bar">
+                                <polygon id="bar glow" class="glow" fill="#ce207a" fill-opacity="30%" points="0,5 318,5 353,56 35,56"/>
+                                <polygon id="bar background" fill="#grey" fill-opacity="30%" points="10,10 316,10 342,50 38,50"/>
+                                <polygon id="bar filling" fill="url(#grad3)" points="10,10 316,10 342,50 38,50"/>
+                                <polygon id="bar outline" stroke="url(#grad1)" stroke-width=2px fill='transparent' points="10,10 316,10 342,50 38,50"/>
+                              </g>
+                              </svg>
+                        '''
+        else:
+            super_gauge_svg = '''
+                          <svg viewbox ='0 0 700 70' width=352 height=60 xmlns="http://www.w3.org/2000/svg"> 
+                              <defs>
+                                <filter id="blur1">
+                                      <feGaussianBlur stdDeviation="1.5" in="SourceGraphic"/>
+                                </filter>
+                                <filter id="blur2">
+                                      <feGaussianBlur stdDeviation="1" in="SourceStroke"/>
+                                </filter>
+                                <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
+                                  <stop offset="0.2" stop-color="#ffffff" stop-opacity=".9"/>                                
+                                  <stop offset="0.5" stop-color="#ffffff" stop-opacity=".2"/>
+                                  <stop offset="0.8" stop-color="#ffffff" stop-opacity=".9"/>
+                                </linearGradient>
+                                <linearGradient id="grad2" x2="1">
+                                  <stop offset="0.5" stop-color="#ce207a"/>
+                                  <stop offset="1" stop-color="#ffd4ff"/>
+                                </linearGradient>
+                                <linearGradient id="grad3" x2="1">
+                                  <stop offset="0.2" stop-color="#ce207a"/>
+                                  <stop offset="0.5" stop-color="#ffd4ff"/>
+                                  <stop offset="0.8" stop-color="#ce207a"/>
+                                </linearGradient> 
+                              </defs>
+                              <style>
+                                .glow {filter: url(#blur1)}
+                                .glow2 {filter: url(#blur2)}
+                                .outline {stroke: url(#grad1)}
+                              </style>
+                              <g id="super bar">
+                                <polygon id="bar background" fill="#grey" fill-opacity="30%" points="10,10 316,10 342,50 38,50"/>'''+f'''
+                                <polygon id="bar filling" fill="url(#grad2)" points="10,10 {str((306*bar_percent)+10)},10 {str((304*bar_percent)+38)},50 38,50"/>
+                                <polygon id="bar outline" stroke="url(#grad1)" stroke-width=2px fill='transparent' points="10,10 316,10 342,50 38,50"/>
+                                <line id="marker grad" stroke-opacity='{marker_visibility}%' class="glow" stroke-width="2px" stroke="url(#grad3)" x1="{str((307*bar_percent)+4)}" y1="2" x2="{str((304*bar_percent)+44)}" y2="58"/>
+                                <line id="marker white" stroke-opacity='{marker_visibility}%' class="glow2" stroke-width="2px" stroke="white" x1="{str((307*bar_percent)+7)}" y1="6" x2="{str((304*bar_percent)+41)}" y2="54"/>
+                              </g>
+                              </svg>
+                        '''
+        super_number_label.set_text(current_super)
+        super_gauge_html.set_content(super_gauge_svg)
+        super_gauge_html.update()
+
+    def updateDriveGauge(state):
         svg = ''
         svg_dict = {
             'Bar 6': ['<path id="Bar 6" class="s6" d="m', 4.0],
@@ -215,39 +472,50 @@ def main_page():
             'Bar 2': ['<path id="Bar 2" class ="s2" d="m', 453.0],
             'Bar 1': ['<path id="Bar 1" class ="s1" d="m', 564.0]
         }
-        drive_bars = math.ceil(state['drive_gauge'] / 10000)
-        for index in range(drive_bars):
-            bar_remaining = state['drive_gauge'] - (index * 10000)
-            if bar_remaining > 10000:
-                bar_percent = 1
-            else:
-                bar_percent = bar_remaining / 10000
-            drive_bar = svg_dict['Bar ' + str((index + 1))][0] + str(
-                (90.6 - round(90.6 * bar_percent, 2) + svg_dict['Bar ' + str((index + 1))][1])) + ' 3.1 h' + str(
-                round(90.6 * bar_percent, 2)) + ' l20.4 30.8 h-' + str(
-                round(89.5 * bar_percent, 2)) + ' z"/>'
-            svg = f'{svg}\n{drive_bar}'
-        drive_gauge_svg = '''
-                            <svg viewBox="0 0 680 37" width="220" height="20" xmlns="http://www.w3.org/2000/svg">
-                            <style>
-                                .s6 { fill: #b3b816;stroke: #ebec24;stroke-miterlimit:100;stroke-width: 5 } 
-                                .s5 { fill: #a7b919;stroke: #e7f035;stroke-miterlimit:100;stroke-width: 5 } 
-                                .s4 { fill: #8fb11c;stroke: #d0ee36;stroke-miterlimit:100;stroke-width: 5 } 
-                                .s3 { fill: #88b713;stroke: #b9e724;stroke-miterlimit:100;stroke-width: 5 } 
-                                .s2 { fill: #56b70f;stroke: #90eb2e;stroke-miterlimit:100;stroke-width: 5 } 
-                                .s1 { fill: #3eb30d;stroke: #63e523;stroke-miterlimit:100;stroke-width: 5 } 
-                            .s7 { opacity: .7;fill: #000000;stroke: #000000;stroke-miterlimit:100;stroke-width: 4 } 
-                            </style>
-                            <g id="Empty" style="opacity: .7">
-                                <path id="Empty" class="s7" d="m4 3.1h90.6l20.4 30.8h-89.5zm113 0h90.6l20.4 30.7h-89.5zm114 0h90.7l20.3 30.7h-89.4zm111 0h90.6l20.4 30.7h-89.5zm111 0h90.6l20.4 30.8h-89.5zm111 0h90.6l20.4 30.7h-89.5z"/>
-                            </g>
+        if state['drive_gauge'] == 0:
+            drive_gauge_svg = '''
+                            <svg viewBox="0 0 770 35" width="220" height="10" xmlns="http://www.w3.org/2000/svg">
                             <g id="Drive Gauge">
-                                {''' + svg + '''
-                                }
-                            </g>
-
+                            <polygon id="burntout" fill="#grey" fill-opacity="30%"  points="10,6 654,6 669,31 25.4,31"/>
+                              </g>
                             </svg>
                             '''
+        else:
+            drive_bars = math.ceil(state['drive_gauge'] / 10000)
+            for index in range(drive_bars):
+                bar_remaining = state['drive_gauge'] - (index * 10000)
+                if bar_remaining > 10000:
+                    bar_percent = 1
+                else:
+                    bar_percent = bar_remaining / 10000
+                drive_bar = svg_dict['Bar ' + str((index + 1))][0] + str(
+                    (90.6 - round(90.6 * bar_percent, 2) + svg_dict['Bar ' + str((index + 1))][1])) + ' 3.1 h' + str(
+                    round(90.6 * bar_percent, 2)) + ' l20.4 30.8 h-' + str(
+                    round(89.5 * bar_percent, 2)) + ' z"/>'
+                svg = f'{svg}\n{drive_bar}'
+
+
+            drive_gauge_svg = '''
+                                <svg viewBox="0 0 770 35" width="220" height="10" xmlns="http://www.w3.org/2000/svg">
+                                <style>
+                                    .s6 { fill: #b3b816;stroke: #ebec24;stroke-miterlimit:100;stroke-width: 5 } 
+                                    .s5 { fill: #a7b919;stroke: #e7f035;stroke-miterlimit:100;stroke-width: 5 } 
+                                    .s4 { fill: #8fb11c;stroke: #d0ee36;stroke-miterlimit:100;stroke-width: 5 } 
+                                    .s3 { fill: #88b713;stroke: #b9e724;stroke-miterlimit:100;stroke-width: 5 } 
+                                    .s2 { fill: #56b70f;stroke: #90eb2e;stroke-miterlimit:100;stroke-width: 5 } 
+                                    .s1 { fill: #3eb30d;stroke: #63e523;stroke-miterlimit:100;stroke-width: 5 } 
+                                .s7 { opacity: .7;fill: #000000;stroke: #000000;stroke-miterlimit:100;stroke-width: 4 } 
+                                </style>
+                                <g id="Empty" style="opacity: .7">
+                                    <path id="Empty" class="s7" d="m4 3.1h90.6l20.4 30.8h-89.5zm113 0h90.6l20.4 30.7h-89.5zm114 0h90.7l20.3 30.7h-89.4zm111 0h90.6l20.4 30.7h-89.5zm111 0h90.6l20.4 30.8h-89.5zm111 0h90.6l20.4 30.7h-89.5z"/>
+                                </g>
+                                <g id="Drive Gauge">
+                                    {''' + svg + '''
+                                    }
+                                </g>
+    
+                                </svg>
+                                '''
         drive_gauge_html.set_content(drive_gauge_svg)
         drive_gauge_html.update()
 
@@ -257,18 +525,13 @@ def main_page():
             if state['move_list']:
                 df = pd.DataFrame(data=state['combo_data'])
                 grid = ui.table.from_pandas(df).classes('w-full')
-                with ui.grid(columns=2).style('row:auto; width:100%;') as table_dialog_grid:
-                    ui.button('Show/Hide Columns', on_click=lambda: table_dialog.close()).style('justify-self:start;')
+                with ui.grid(columns=1).style('row:auto; width:100%;') as table_dialog_grid:
                     ui.button('Close', on_click=lambda: table_dialog.close()).style('justify-self:end;')
             else:
                 with ui.row():
                     ui.label('No moves selected. Select some moves first!')
                 with ui.grid(columns=1).style('row:auto; width:100%;') as table_dialog_grid:
                     ui.button('Close', on_click=lambda: table_dialog.close()).style('justify-self:center;')
-
-    def clearList(state):
-        chips.clear()
-        updateChips(state)
 
     async def saveCombo(state):
         save_combo_dialog_input.set_value('')
@@ -281,14 +544,18 @@ def main_page():
                     combo_uuid = uuid.uuid4()
                     final_damage_number = state['final_damage']
                     additional_damage_number = state['additional_damage']
-                    drive_gauge_status = state['drive_gauge']
+                    drive_gauge_gained = state['drive_gauge'] - drive_slider.value
+                    super_gauge_gained = state['super_gauge'] - super_slider.value
                     if state['additional_damage'] > 0:
                         damage_label_text = f'{final_damage_number} ({final_damage_number - additional_damage_number} + {additional_damage_number})'
                     else:
                         damage_label_text = state['final_damage']
-                    state['combo_storage'][combo_uuid] = [state['move_list'], damage_label_text, state['counter'],
-                                                          state['perfect_parry'], state['character_specifics'][state['character']],
-                                                          combo_name]
+                    if state['character'] in state['character_specifics'].keys():
+                        character_specifics = state['character_specifics'][state['character']]
+                    else:
+                        character_specifics = None
+                    state['combo_storage'][combo_uuid] = [state['move_list'], state['counter'],
+                                                          state['perfect_parry'], character_specifics,drive_slider.value,super_slider.value]
                     with output_column:
                         with ui.row() as new_combo_row:
                             with ui.card().style('height: auto').props('square flat').classes('drop-shadow-md'):
@@ -302,23 +569,23 @@ def main_page():
                                         ui.restructured_text(f'''
                                         Damage: **{damage_label_text}**
 
-                                        Drive used: **{int(60000 - drive_gauge_status)}**''')
+                                        Drive gained: **{drive_gauge_gained}**
+                                        
+                                        Super meter gain: **{super_gauge_gained}** ''')
                 else:
                     ui.notify('Too many saved combos. Delete one to save!')
 
     def restoreCombo(state, combo_uuid):
         clearList(state)
-        state['move_list'] = state['combo_storage'][combo_uuid][0]
-        state['counter'] = state['combo_storage'][combo_uuid][2]
-        state['perfect_parry'] = state['combo_storage'][combo_uuid][3]
-        print(state['combo_storage'][combo_uuid][4])
-        state['character_specifics'][state['character']] = state['combo_storage'][combo_uuid][4]
-        print(state['character_specifics'])
+        if state['character'] in state['character_specifics'].keys():
+            state['character_specifics'][state['character']] = state['combo_storage'][combo_uuid][3]
         characterSpecificStuff(state)
-        for move in state['move_list']:
-            createChip(move)
-        counter_radio.set_value(state['counter'])
-        perfect_parry_checkbox.set_value(state['perfect_parry'])
+        counter_radio.set_value(state['combo_storage'][combo_uuid][1])
+        perfect_parry_checkbox.set_value(state['combo_storage'][combo_uuid][2])
+        drive_slider.set_value(state['combo_storage'][combo_uuid][4])
+        super_slider.set_value(state['combo_storage'][combo_uuid][5])
+        for move in state['combo_storage'][combo_uuid][0]:
+            createChip(move,False,state)
 
     def downloadCombo(state, uuid, name):
         combo_string = f"Counter: {state['combo_storage'][uuid][2]}\nString: {', '.join(state['combo_storage'][uuid][0])}\nDamage: {state['combo_storage'][uuid][1]}"
@@ -330,10 +597,10 @@ def main_page():
 
     with (ui.row().style('width:100%;')):
         # left side
-        with ui.column(align_items='center').style('max-width:240px;min-width:240px;') as parameter_column:
+        with ui.column().style('min-width:240px;') as parameter_column:
             with ui.card().style('width:100%;height:100%;').props('square flat'):
+                # dropdown button for selecting a character. runs update_dropdown function on selection which loads the character moves and sets them as options for the move_dropdown
                 with ui.row():
-                    # dropdown button for selecting a character. runs update_dropdown function on selection which loads the character moves and sets them as options for the move_dropdown
                     with ui.button('Character', icon='switch_account').style('width: auto').props('align=left icon-right=arrow_drop_down') as select_character_button:
                         with ui.menu().style('width: 180px'):
                             ui.menu_item('A.K.I.').on('mousedown',lambda: characterSelected(state, 'A.K.I.'))
@@ -353,9 +620,9 @@ def main_page():
                             ui.menu_item('Kimberly').on('mousedown', lambda: characterSelected(state, 'Kimberly'))
                             ui.menu_item('Lily').on('mousedown', lambda: characterSelected(state, 'Lily'))
                             ui.menu_item('Luke').on('mousedown', lambda: characterSelected(state, 'Luke'))
-                            ui.menu_item('M. Bison').on('mousedown', lambda: characterSelected(state, 'M. Bison'))
+                            ui.menu_item('M.Bison').on('mousedown', lambda: characterSelected(state, 'M.Bison'))
                             ui.menu_item('Manon').on('mousedown', lambda: characterSelected(state, 'Manon'))
-                            ui.menu_item('Marisa').on('mousedown', lambda: characterSelected(state, 'Akuma'))
+                            ui.menu_item('Marisa').on('mousedown', lambda: characterSelected(state, 'Marisa'))
                             ui.menu_item('Rashid').on('mousedown', lambda: characterSelected(state, 'Rashid'))
                             ui.menu_item('Ryu').on('mousedown', lambda: characterSelected(state, 'Ryu'))
                             ui.menu_item('Terry').on('mousedown', lambda: characterSelected(state, 'Terry'))
@@ -366,25 +633,43 @@ def main_page():
                     character_portrait = ui.image(state['char_custom_dict'][state['character']][1]).style('height:56px;width:56px').classes('shadow-md rounded-borders')
                 #character move select box and filter
                 ui.markdown('**Character Moves:**')
-                move_type_toggle = ui.toggle(['Normal','Special','Drive'],value=state['move_type'], on_change= lambda e:filterMoves(e.value,state)).props('dense')
+                # move select dropdown
                 with ui.row():
-                    move_dropdown = ui.select(label='Select Move', options=[], with_input=True,on_change=lambda e: createChip(e.value)).style('width:75%')
-                    select_button = ui.button(icon='check', on_click=lambda e: createChip(move_dropdown.value)).style(
+                    move_dropdown = ui.select(label='Select Move',
+                                              with_input=True,
+                                              options=[],
+                                              on_change=lambda e: createChip(e.value,False,state) if e.value else None
+                                              ).style('width:75%').props('hide-selected').on('keydown', lambda e: selectInput(e.args['key']))
+                    select_button = ui.button(icon='check', on_click=lambda e: createChip(move_dropdown.value,False,state)).style(
                         'position:relative; top:10px; width:15%')
+                    #filter
+                with ui.expansion('Filter moves',icon='filter_list').style('width:100%; max-width: 280px'):
+                    move_type_toggle = ui.select(label='No filter if empty', options=[],multiple=True,value=[],clearable=True, on_change= lambda e:filterMoves(e.value,state)).style('width: 100%').props('use-chips size=xs dense inline')
+                    #modifiers
+                with ui.expansion('Adjust modifiers', icon='tune').style('width:100%; max-width: 280px'):
+                    ui.markdown('**Counter hit:**').style('height: 12px')
+                    counter_radio = ui.radio(['None', 'CH', 'PC'], value='None',
+                                             on_change=lambda e: updateCounter(state, e.value)).props('inline')
 
-                ui.markdown('**Counter hit:**').style('height: 12px')
-                counter_radio = ui.radio(['No Counter', 'Counter', 'Punish Counter'], value='No Counter',
-                                         on_change=lambda e: updateCounter(state, e.value)).style('padding: 4px')
+                    ui.markdown('**Other Modifiers:**').style('height: 12px')
+                    perfect_parry_checkbox = ui.checkbox(text='Perfect Parry',
+                                                         on_change=lambda e: updatePerfectParry(state, e.value))
+                    cancelled_special_checkbox = ui.checkbox(text='Cancelled special into Super',
+                                                             on_change=lambda e: updateCancelledSpecial(state, e.value))
 
-                ui.markdown('**Other Modifiers:**').style('height: 12px')
-                perfect_parry_checkbox = ui.checkbox(text='Perfect Parry',
-                                                     on_change=lambda e: updatePerfectParry(state, e.value))
-                cancelled_special_checkbox = ui.checkbox(text='Cancelled special into Super',
-                                                         on_change=lambda e: updateCancelledSpecial(state, e.value))
-
-                ui.markdown('**Character specific options:**').style('height: 12px')
-                with ui.row() as char_specific_row:
-                    ui.label('No character selected')
+                    ui.markdown('**Character specific options:**').style('height: 12px')
+                    with ui.row() as char_specific_row:
+                        ui.label('No character selected')
+                    #sliders
+                with ui.expansion('Adjust meter settings', icon='speed').style('width:100%; max-width: 280px'):
+                    ui.markdown('**Starting Drive:**').style('height: 12px')
+                    drive_slider_labels = {0:"0", 10000:"1", 20000:"2", 30000:"3",40000:"4", 50000:"5", 60000:"6"}
+                    drive_slider = ui.slider(min=0, max=60000, step=250, value=60000).props(f'label thumb-size="0px" track-size="20px" :markers="10000" :marker-labels="{drive_slider_labels}"'
+                    ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
+                    ui.markdown('**Starting Super:**').style('height: 12px')
+                    super_slider_labels = {0:"0", 10000:"1", 20000:"2", 30000:"3"}
+                    super_slider = ui.slider(min=0, max=30000, step=100, value=30000).props(f'label thumb-size="0px" track-size="20px" :markers="10000" :marker-labels="{super_slider_labels}"'
+                    ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
 
         # main body
         with ui.column().style('flex:1; width:100%;min-width:240px;') as combo_column:
@@ -392,20 +677,32 @@ def main_page():
             with ui.card().style('width: 100%; height:auto; min-height: 180px').classes('drop-shadow-md').props(
                     'square flat') as chips_card:
                 with ui.row().style('width:100%') as chips_row:
-                    counter_chip = ui.chip(icon='undo', text='No Counter', color='#d5deee', ).props(
+                    counter_chip = ui.chip(icon='undo', text='No Counter', color='#d5deee').props(
                         'flat square size=18px').style('justify-self:end')
                 with ui.column() as chips:
-                    chips = chips
-                clear_button = ui.button(text='Clear', on_click=lambda e: clearList(state)).style(
-                    'position: absolute; bottom: 10px; right: 10px')
+                    None
+                with ui.row().style('width: 100%; height: 50px' ):
+                    with ui.column().style(
+                        'position: absolute; bottom: 10px; left: 10px'):
+                        with ui.row().classes('gap-1'):
+                            up_button = ui.button(icon='keyboard_arrow_up',on_click=lambda: moveChipsUp()).style('width:40px').bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
+                            down_button = ui.button(icon='keyboard_arrow_down',on_click=lambda: moveChipsDown()).style('width:40px').bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
+                    with ui.column().style(
+                            'position: absolute; bottom: 10px; right: 10px'):
+                        with ui.row().classes('gap-1'):
+                            duplicate_button = ui.button(text='Duplicate', on_click=lambda: duplicateMove()).bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
+                            clear_button = ui.button(text='Clear all', on_click=lambda: clearList(state)).bind_enabled_from(state, 'move_list',
+                                                                                               backward=lambda e: e)
 
         # right side
-        with ui.column(align_items='center').style('width:20%;max-width:240px;min-width:240px;') as output_column:
+        with ui.column(align_items='center').style('width:20%;min-width:240px;') as output_column:
             with ui.card().props('square flat'):
                 final_damage_number = state['final_damage']
                 final_damage_label = ui.markdown(f'#### Damage: **{final_damage_number}**').style('width: 100%')
-                drive_gauge_label = ui.markdown('Drive gauge:')
                 drive_gauge_html = ui.html(state['drive_gauge_svg'])
+                with ui.row(align_items='center').style('width: 100%; align-content: center;'):
+                    super_number_label = ui.label(text=3).classes('text-2xl font-black').style('width:3%; color:#ce207a')
+                    super_gauge_html = ui.html(state['super_gauge_svg']).style('width:87%')
                 with ui.row().style('width: 100%; justify-content: center;'):
                     show_data_button = ui.button('Data', on_click=lambda: table_dialog.open()).style(
                         'width: 45%').bind_enabled_from(state, 'move_list', backward=lambda e: e)
@@ -505,9 +802,7 @@ def main_page():
                     'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
 
-
-
-ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg',on_air=False)
+ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg',on_air=False,viewport='width=device-width, user-scalable=no')
 
 #to do:
 # create definitions for keywords

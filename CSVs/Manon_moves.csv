@@ -1,0 +1,92 @@
+Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,Immediate scaling,Min scaling,Counter multiplier,Punish multiplier,Counter Hit,Punish Counter,Super gain,Drive gain,Visible?
+5LP,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+5MP,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+5HP,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,3000,Yes
+5LK,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+5MK,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,700,1500,Yes
+5HK,Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,3000,Yes
+2LP,Normal,300,1,None,0.8,0,0,0,1.2,1.2,360,360,300,250,Yes
+2MP,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+2HP,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,1000,3000,Yes
+2LK,Normal,200,1,None,0.8,0,0,0,1.2,1.2,240,240,300,250,Yes
+2MK,Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,600,2000,Yes
+2HK,Normal,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1000,3000,Yes
+8LP,Normal,300,1,None,1,0,0,0,1.2,1.2,360,360,300,3000,Yes
+8MP,Normal,700,1,None,1,0,0,0,1.2,1.2,840,840,500,1000,Yes
+8HP,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+8LK,Normal,300,1,None,1,0,0,0,1.2,1.2,360,360,300,500,Yes
+8MK,Normal,500,1,None,1,0,0,0,1.2,1.2,600,600,500,1000,Yes
+8HK,Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+4HP,Command Normal,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,2000,Yes
+3HK,Command Normal,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,500,3000,Yes
+4MK,Command Normal,600,1,None,1,0,0,0,1.2,1.2,720,720,700,2000,Yes
+4MK > 5MK target combo,Target Combo,600,1,> 5MK (4MK > 5MK target combo),1,0,0,0,1.2,1.2,720,720,700,2000,Yes
+> 5MK (4MK > 5MK target combo),Target Combo,500,1,None,1,0,0,0,1.2,1.2,600,600,700,1000,No
+5MP > 5MK target combo,Target Combo,600,1,> 5MK (5MP > 5MK target combo),1,0,0,0,1.2,1.2,720,720,500,1500,Yes
+> 5MK (5MP > 5MK target combo),Target Combo,500,1,None,1,0,0,0,1.2,1.2,600,600,700,2500,No
+5HP > 5HP target combo,Target Combo,800,1,> 5HP (5HP > 5HP target combo),1,0,0,0,1.2,1.2,960,960,1000,3000,Yes
+> 5HP (5HP > 5HP target combo),Target Combo,600,1,None,1,0,0,0,1.2,1.2,720,720,1000,2000,No
+2HP > 5HP target combo,Target Combo,600,1,> 5HP (2HP > 5HP target combo),1,0,0,0,1.2,1.2,720,720,1000,3000,Yes
+> 5HP (2HP > 5HP target combo),Target Combo,500,1,None,1,0,0,0,1.2,1.2,600,600,1000,2000,No
+63214P (level 1),Special,2000,1,None,1,0,0,0,1,1.15,2000,2300,3000,5000,Yes
+63214P (level 2),Special,2300,1,None,1,0,0,0,1,1.15,2300,2645,3000,5000,Yes
+63214P (level 3),Special,2700,1,None,1,0,0,0,1,1.15,2700,3105,4000,5000,Yes
+63214P (level 4),Special,3000,1,None,1,0,0,0,1,1.15,3000,3450,5000,5000,Yes
+63214P (level 5),Special,3700,1,None,1,0,0,0,1,1.15,3700,4255,5000,5000,Yes
+236LK,Special,900,1,None,1,0,0,0,1.2,1.2,1080,1080,1350,2000,Yes
+236MK,Special,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1350,2000,Yes
+236HK,Special,800,1,None,1,0,0,0,1.2,1.2,960,960,1350,2000,Yes
+236HK (cancelled to SA3),Special,400,1,None,1,-0.05,0,0,1.2,1.2,480,480,600,1000,Yes
+214LK,Special,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,800,1500,Yes
+214MK,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,800,2000,Yes
+214HK,Special,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,800,3000,Yes
+236LP (level 1),Special,1350,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1360,1360,2150,3000,Yes
+236LP (level 2),Special,1500,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1510,1510,2150,3000,Yes
+236LP (level 3),Special,1650,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1660,1660,3150,3000,Yes
+236LP (level 4),Special,1800,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1810,1810,3150,3000,Yes
+236LP (level 5),Special,1950,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1960,1960,4150,3000,Yes
+236MP (level 1),Special,1400,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1420,1420,2150,3000,Yes
+236MP (level 2),Special,1550,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1570,1570,2150,3000,Yes
+236MP (level 3),Special,1700,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1720,1720,3150,3000,Yes
+236MP (level 4),Special,1850,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1870,1870,3150,3000,Yes
+236MP (level 5),Special,2000,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),2020,2020,4150,3000,Yes
+236HP (level 1),Special,1500,1,None,1,0,0,0,1.2,1.2,1540,1540,2150,3000,Yes
+236HP (level 2),Special,1650,1,None,1,0,0,0,1.2,1.2,1690,1690,2150,3000,Yes
+236HP (level 3),Special,1800,1,None,1,0,0,0,1.2,1.2,1840,1840,3150,3000,Yes
+236HP (level 4),Special,1950,1,None,1,0,0,0,1.2,1.2,1990,1990,3150,3000,Yes
+236HP (level 5),Special,2100,1,None,1,0,0,0,1.2,1.2,2140,2140,4150,3000,Yes
+236P > K,Special,800,1,None,1.7,0,-0.1,0,1.2,1.2,960,960,1150,2500,Yes
+63214PP (level 1),Overdrive,2000,1,None,1,0,0,0,1,1.15,2000,2300,3000,5000,Yes
+63214PP (level 2),Overdrive,2300,1,None,1,0,0,0,1,1.15,2300,2645,3000,5000,Yes
+63214PP (level 3),Overdrive,2700,1,None,1,0,0,0,1,1.15,2700,3105,4000,5000,Yes
+63214PP (level 4),Overdrive,3000,1,None,1,0,0,0,1,1.15,3000,3450,5000,5000,Yes
+63214PP (level 5),Overdrive,3700,1,None,1,0,0,0,1,1.15,3700,4255,5000,5000,Yes
+236KK,Overdrive,800,1,None,1,0,0,0,1.2,1.2,960,960,1350,-20000,Yes
+236KK (cancelled to SA3),Overdrive,500,1,None,1,-0.05,0,0,1.2,1.2,600,600,600,-20000,Yes
+236KK (whiff 1st hit),Overdrive,400,1,None,1,0,0,0,1.2,1.2,480,480,750,-20000,Yes
+214KK,Overdrive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,800,-20000,Yes
+236PP (level 1),Overdrive,1500,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1540,1540,2150,-20000,Yes
+236PP (level 2),Overdrive,1650,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1690,1690,2150,-20000,Yes
+236PP (level 3),Overdrive,1800,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1840,1840,3150,-20000,Yes
+236PP (level 4),Overdrive,1950,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),1990,1990,3150,-20000,Yes
+236PP (level 5),Overdrive,2100,1,None,1,0,0,0,1.2 (1st hit only),1.2 (1st hit only),2140,2140,4150,-20000,Yes
+236PP > K,Overdrive,800,1,None,1.7,0,-0.1,0,1.2,1.2,960,960,1150,-20000,Yes
+SA1,Super,2000,1,None,1,0,0,0.3,1.2,1.2,2400,2400,-10000,0,Yes
+SA2,Super,2800,1,None,1,0,0,0.4,1.2,1.2,3360,3360,-20000,0,Yes
+SA3 (level 1),Super,4000,1,None,1,0,-0.05,0.5,1.2,1.2,4800,4800,-30000,0,Yes
+SA3 (level 2),Super,4100,1,None,1,0,-0.05,0.5,1.2,1.2,4920,4920,-30000,0,Yes
+SA3 (level 3),Super,4200,1,None,1,0,-0.05,0.5,1.2,1.2,5040,5040,-30000,0,Yes
+SA3 (level 4),Super,4400,1,None,1,0,-0.05,0.5,1.2,1.2,5280,5280,-30000,0,Yes
+SA3 (level 5),Super,4600,1,None,1,0,-0.05,0.5,1.2,1.2,5520,5520,-30000,0,Yes
+CA (level 1),Super,4500,1,None,1,0,-0.05,0.5,1.2,1.2,5400,5400,-30000,0,Yes
+CA (level 2),Super,4600,1,None,1,0,-0.05,0.5,1.2,1.2,5520,5520,-30000,0,Yes
+CA (level 3),Super,4700,1,None,1,0,-0.05,0.5,1.2,1.2,5640,5640,-30000,0,Yes
+CA (level 4),Super,4900,1,None,1,0,-0.05,0.5,1.2,1.2,5880,5880,-30000,0,Yes
+CA (level 5),Super,5100,1,None,1,0,-0.05,0.5,1.2,1.2,6120,6120,-30000,0,Yes
+Raw Drive Impact,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,0,-10000,Yes
+Punish Drive Impact,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,3000,-10000,Yes
+Drive Impact Wall Splat,Drive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,0,-10000,Yes
+Drive Impact Wall Splat (blocked),Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-10000,Yes
+Drive Rush Cancel,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-30000,Yes
+Drive Rush,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,-10000,Yes
+2 Frame Microwalk,Drive,0,0,None,1,0,0,0,1.2,1.2,0,0,0,60,Yes
