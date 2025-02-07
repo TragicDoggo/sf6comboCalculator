@@ -30,16 +30,16 @@ Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,
 5MP > 5HK target combo,Target Combo,600,2,> 5HK (5MP > 5HK target combo),1,0,0,0,1.2,1.2,720,720,500,1500,Yes
 > 5HK (5MP > 5HK target combo),Target Combo,400,2,None,1,0,0,0,1.2,1.2,480,480,600,2000,No
 236LP,Special,700,1,None,0.7,0,0,0,1.2,1.2,840,840,800,2000,Yes
-236LP (wind),Special,1000,2,None,0.8,0,0,0,1.2,1.2,1200,1200,500,900,Yes
 236MP,Special,800,1,None,0.9,0,0,0,1.2,1.2,960,960,800,2000,Yes
-236MP (wind),Special,1400,1,None,1,0,0,0,1.2,1.2,1680,1680,800,2000,Yes
 236HP,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,800,2000,Yes
+236LP (wind),Special,1000,2,None,0.8,0,0,0,1.2,1.2,1200,1200,500,900,Yes
+236MP (wind),Special,1400,1,None,1,0,0,0,1.2,1.2,1680,1680,800,2000,Yes
 236HP (wind),Special,1800,1,None,1,0,0,0,1.2,1.2,2160,2160,800,2600,Yes
 214LK,Special,1100,1,None,1,0,0,0,1.2,1.2,1320,1320,1000,2000,Yes
-214LK (wind),Special,1300,1,None,1,0,0,0,1.2,1.2,1560,1560,1000,2000,Yes
 214MK,Special,1300,1,None,1,0,0,0,1.2,1.2,1560,1560,1100,2000,Yes
-214MK (wind),Special,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1200,2000,Yes
 214HK,Special,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1200,2000,Yes
+214LK (wind),Special,1300,1,None,1,0,0,0,1.2,1.2,1560,1560,1000,2000,Yes
+214MK (wind),Special,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1200,2000,Yes
 214HK (wind),Special,1500,1,None,1,0,0,0,1.2,1.2,1800,1800,1200,2000,Yes
 236K,Special,600,1,None,1,0,0,0,1.2,1.2,720,720,600,1000,Yes
 236K (lvl 2),Special,900,1,None,1,0,0,0,1.2,1.2,1080,1080,600,1000,Yes

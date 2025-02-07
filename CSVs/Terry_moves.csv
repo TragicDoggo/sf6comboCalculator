@@ -62,7 +62,7 @@ Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,
 236HK,Special,800,1,None,1,0,0,0,1.2,1.2,960,960,500,2000,Yes
 236PP,Overdrive,800,1,None,0.8,0,0,0,1.2,1.2,960,960,600,-20000,Yes
 214LPMP,Overdrive,1400,1,None,0.8,0,0,0,1.2,1.2,1680,1680,1300,-20000,Yes
-214LPMP (2nd hit connects),Overdrive,1000,1,None,0.8,0,0,0,1.2,1.2,1200,1200,1300,-20000,Yes
+214LPMP (whiff 1st hit),Overdrive,1000,1,None,0.8,0,0,0,1.2,1.2,1200,1200,1300,-20000,Yes
 214(LP/MP)HP,Overdrive,1400,2,None,0.8,0,0,0,1.2,1.2,1680,1680,1200,-20000,Yes
 214KK,Overdrive,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,-20000,Yes
 623PP,Overdrive,1600,1,None,1,0,0,0,1.2,1.2,1920,1920,1600,-20000,Yes
