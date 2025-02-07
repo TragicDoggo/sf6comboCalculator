@@ -45,9 +45,9 @@ Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,
 623LP,Special,900,1,None,1,0,0,0,1.2,1.2,1080,1080,800,2000,Yes
 623MP,Special,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,800,2000,Yes
 623HP,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,800,2000,Yes
-623LP (late hit),Special,800,1,None,1,0,0,0,1.2,1.2,960,960,800,2000,Yes
-623MP (late hit),Special,800,1,None,1,0,0,0,1.2,1.2,960,960,800,2000,Yes
-623HP (late hit),Special,800,1,None,1,0,0,0,1.2,1.2,960,960,800,2000,Yes
+623LP (whiff 1st 2 frames),Special,800,1,None,1,0,0,0,1.2,1.2,960,960,800,2000,Yes
+623MP (whiff 1st 2 frames),Special,800,1,None,1,0,0,0,1.2,1.2,960,960,800,2000,Yes
+623HP (whiff 1st 2 frames),Special,800,1,None,1,0,0,0,1.2,1.2,960,960,800,2000,Yes
 214LP,Special,700,1,None,1,0,0,0,1.2,1.2,840,840,500,2000,Yes
 214LP (hold),Special,600,1,> 2nd hit (214LP (hold)),1,0,0,0,1.2,1.2,720,720,500,2000,Yes
 > 2nd hit (214LP (hold)),Special,200,1,None,1,0,0,0,1.2,1.2,240,240,100,250,No
@@ -72,8 +72,8 @@ Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,
 623PP,Overdrive,1400,1,None,1,0,0,0,1.2,1.2,1680,1680,1000,-20000,Yes
 623PP > PP,Overdrive,1400,1,> PP (623PP > PP),1,0,0,0,1.2,1.2,1680,1680,1000,-10000,Yes
 > PP (623PP > PP),Overdrive,600,1,None,1,0,0,0,1.2,1.2,720,720,700,-10000,No
-623PP (late hit),Overdrive,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,-20000,Yes
-623PP (late hit) > PP,Overdrive,1200,1,> PP (623PP > PP),1,0,0,0,1.2,1.2,1440,1440,1000,-20000,Yes
+623PP (whiff 1st 2 frames),Overdrive,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1000,-20000,Yes
+623PP (whiff 1st 2 frames) > PP,Overdrive,1200,1,> PP (623PP > PP),1,0,0,0,1.2,1.2,1440,1440,1000,-20000,Yes
 214PP,Overdrive,800,1,None,1,0,0,0,1.2,1.2,960,960,1000,-20000,Yes
 214PP > PP,Overdrive,400,1,None,1,0,0,0,1.2,1.2,480,480,500,-20000,Yes
 > PP (214PP > PP),Overdrive,2500,1,None,1,0,0,0,1.2,1.2,3000,3000,3000,-10000,Yes

@@ -41,7 +41,7 @@ Move,Move type,Damage,Counts as (hits),Next hit,Scaling route,Next move scaling,
 236LK,Special,1600,1,None,1,0,0,0,1,1.15,1600,1840,3000,5000,Yes
 236MK,Special,1700,1,None,1,0,0,0,1,1.15,1700,1955,3000,5000,Yes
 236HK,Special,1800,1,None,1,0,0,0,1,1.15,1800,2070,3000,5000,Yes
-22P (charge),Special,800,2,None,0.8,0,0,0,1.2,1.2,960,960,1150,2000,Yes
+22P (basic charge),Special,800,2,None,0.8,0,0,0,1.2,1.2,960,960,1150,2000,Yes
 22P (OD charge),Special,1200,2,None,0.8,0,0,0,1.2,1.2,1440,1440,1350,2400,Yes
 22P (SA1 charge),Special,1000,2,None,0.8,0,0,0,1.2,1.2,1200,1200,1000,1000,Yes
 214PP,Overdrive,1000,1,None,1,0,0,0,1.2,1.2,1200,1200,1000,-20000,Yes

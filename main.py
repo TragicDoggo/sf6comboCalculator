@@ -1,6 +1,7 @@
 from nicegui import ui
 from getMoves import moves as m
 from calculator import comboCalculator as cc
+import os
 import re
 import uuid
 import math
@@ -135,18 +136,57 @@ def main_page():
         'faq_tables': {'term_columns': [{'name': 'name', 'label': 'Name', 'field': 'name', 'sortable': False},
                                                 {'name': 'meaning', 'label': 'Meaning', 'field': 'meaning',
                                                  'sortable': False}],
-                               'move_term_rows': [{'name': '', 'meaning': ''},
-                                                  {'name': '', 'meaning': ''}],
-                               'data_term_rows': [{'name': '', 'meaning': ''},
-                                                  {'name': '', 'meaning': ''}]
-                               }
-
+                       'move_term_rows': [
+                            {'name': '[X] hit only', 'meaning': 'Only the X hit makes contact with the opponent'},
+                            {'name': '[X] hits', 'meaning': 'Indicates the number of hits which make contact with the opponent, e.g. you may choose the 1 hit version of a move as the move can only be cancelled after the first hit'},
+                            {'name': '> L/M/HK/P', 'meaning': 'The > symbol indicates a move was cancelled or a follow-up button was pressed, for example, 214K > K. However a move which starts with the > symbol must be preceded by a move which can cancel into it (e.g. Juri\'s 236MKHK > LK)'},
+                            {'name': '1st hit/last hit', 'meaning': 'Ed\'s SA2 is odd because it doesn\'t deal all damage at once, instead it deals it over 7 hits. This means that if you hit an opponent with the first hit of the SA2, then use a DP which results in them landing on the ball again, the damage of the second hit scaling of the SA2 will be calculated based on the hit from the DP. Basically, you need to manually add the 7 hits of the SA2, taking note of how many times the opponent hits the ball between other attacks to get an accurate calculation!'},
+                            {'name': 'air', 'meaning': 'The button combination is input in the air to perform the attack. For example, entering 214LK for a shoto on the ground would result in a Tatsu, in the air it would result in an Air Tatsu'},
+                            {'name': 'airborne opponent', 'meaning': 'Version of that move which is performed when the opponent is airborne'},
+                            {'name': 'basic/OD/SA1 charge', 'meaning': 'The type of charge used to activate the Blanka-chan doll'},
+                            {'name': 'blocked', 'meaning': 'Version of that move which occurs when the attack is blocked by the opponent'},
+                            {'name': 'burst', 'meaning': 'The move bursts the bubble of A.K.I.\'s Nightshade Pulse, as opposed to the bubble hitting the opponent and then the whip follow up hitting them'},
+                            {'name': 'cancelled/cancel', 'meaning': 'The move is cancelled, sometimes into a specific move. Changes the damage and other properties'},
+                            {'name': 'charge lv[X]', 'meaning': 'The button is held down to produce a more powerful version of the move. The longer the button is held, the higher the charge level. Charge moves don\'t usually have more than 3 levels: the base attack, level 2 charge and level 3 charge'},
+                            {'name': 'close/far/mid', 'meaning': 'How close the character is to the opponent, changing the move\'s properties or which move is performed'},
+                            {'name': 'counter', 'meaning': 'The move absorbs a hit from the opponent, triggering the counter version of the move'},
+                            {'name': 'cross-up', 'meaning': 'Used when the move moves to the other side of the opponent, or crosses-up'},
+                            {'name': 'crouching opponent', 'meaning': 'Opponent is in a crouched state when the move hits'},
+                            {'name': 'delayed hit', 'meaning': 'Indicates that the first part of the move (maybe only the first active frame) whiffs leading to different properties'},
+                            {'name': 'denjin charge', 'meaning': 'Uses a denjin charge when performed'},
+                            {'name': 'detonate bomb', 'meaning': 'Manually trigger the explosion of the planted mine/bomb with this move'},
+                            {'name': 'drink', 'meaning': 'Jamie drinks after the move'},
+                            {'name': 'early/late', 'meaning': 'The timing of the move in the combo'},
+                            {'name': 'Enhanced', 'meaning': 'Version of the move performed when the character has resources which enhance that move, e.g. Juri Fuha stocks or Honda Sumo Spirit'},
+                            {'name': 'hold', 'meaning': 'Version of the move which is performed when the attack button is held after completing the motion'},
+                            {'name': 'install', 'meaning': 'A version of the move performed when the character is in an "install" state, such as Juri, Blanka or Guile\'s SA2'},
+                            {'name': 'level [X]', 'meaning': 'Indicates how many medals Manon has'},
+                            {'name': 'non-cinematic', 'meaning': 'When a Super\'s first hit misses it leads to a version of the move where the cinematic doesn\'t play and the damage is reduced'},
+                            {'name': 'perfect', 'meaning': 'Perfect timing for a charge move or a move which requires holding a button'},
+                            {'name': 'secret', 'meaning': 'A secret move (unlocked via letting a long taunt play out)'},
+                            {'name': 'timer expired', 'meaning': 'For moves which plant a bomb or mine, which will deal damage after a certain time. This move should be used at the point in the combo where the bomb/mine etc explodes due to the timer running out instead of manually triggering it'},
+                            {'name': 'toxic blossom', 'meaning': 'The move triggers the Toxic Blossom effect on a poisoned opponent, dealing additional damage'},
+                            {'name': 'whiff [X]', 'meaning': 'Indicates that part of the move missed the opponent, leading to different properties'},
+                            {'name': 'wind', 'meaning': 'Move is enhanced with an air current'}
+                                          ],
+                       'data_term_rows': [
+                            {'name': 'Move name', 'meaning': 'Inputs of the move'},
+                            {'name': 'Scaled damage', 'meaning': 'Damage of the move after scaling has been applied'},
+                            {'name': 'Final scaling', 'meaning': 'Scaling applied to the move after calculations have been performed'},
+                            {'name': 'Counts as (hits)', 'meaning': 'Number of hits the move counts as in the combo. Most moves count as 1 and only increase the scaling by 1 level, but some count as more than 1 which means the moves following have increased scaling applied to them'},
+                            {'name': 'Immediate scaling', 'meaning': 'Additional scaling applied to the move immediately'},
+                            {'name': 'Next move scaling', 'meaning': 'Additional applied to the move following this one'},
+                            {'name': 'Raw damage', 'meaning': 'Damage of the move before scaling is applied'},
+                            {'name': 'Combo damage', 'meaning': 'Total damage in the combo up to this point'},
+                            {'name': 'Drive gain', 'meaning': 'How much drive the character gains (or loses) from this move'},
+                            {'name': 'Super gain', 'meaning': 'How much Super meter the character gains (or loses) from this move'}]
+                       }
     }
 
     # set ui defaults
     ui.colors()
     dark = ui.dark_mode()
-    ui.colors(primary='#465261')
+    ui.colors(primary='#465261',dark='#121212')
     ui.card.default_style('width: 250px; height: 220px')
 
     def characterSpecificStuff(state):
@@ -165,7 +205,6 @@ def main_page():
         def kimBuff(toggle_value,state):
             state['character_specifics']['Kimberly'] = toggle_value
             calculateData(state)
-
 
         char_specific_row.clear()
         if state['character'] == 'Jamie':
@@ -224,9 +263,9 @@ def main_page():
             move_dropdown.run_method('setOptionIndex', 0)
 
     def createChip(name,selected,state):
-        move_type = state['all_moves'][name]['Move type']
         if name:
             try:
+                move_type = state['all_moves'][name]['Move type']
                 # Default color
                 colour = 'blue-grey-5'
                 colours_keywords = {
@@ -554,8 +593,15 @@ def main_page():
                         character_specifics = state['character_specifics'][state['character']]
                     else:
                         character_specifics = None
-                    state['combo_storage'][combo_uuid] = [state['move_list'], state['counter'],
-                                                          state['perfect_parry'], character_specifics,drive_slider.value,super_slider.value]
+                    state['combo_storage'][combo_uuid] = [state['move_list'],
+                                                          state['counter'],
+                                                          state['perfect_parry'],
+                                                          character_specifics,
+                                                          drive_slider.value,
+                                                          super_slider.value,
+                                                          state['final_damage'],
+                                                          state['drive_gauge'],
+                                                          state['super_gauge']]
                     with output_column:
                         with ui.row() as new_combo_row:
                             with ui.card().style('height: auto').props('square flat').classes('drop-shadow-md'):
@@ -588,7 +634,13 @@ def main_page():
             createChip(move,False,state)
 
     def downloadCombo(state, uuid, name):
-        combo_string = f"Counter: {state['combo_storage'][uuid][2]}\nString: {', '.join(state['combo_storage'][uuid][0])}\nDamage: {state['combo_storage'][uuid][1]}"
+        combo_string = (f"Counter: {state['combo_storage'][uuid][1]}"
+                        f"\nPerfect Parry: {state['combo_storage'][uuid][2]}"
+                        f"\nString: {', '.join(state['combo_storage'][uuid][0])}"
+                        f"\nDamage: {state['combo_storage'][uuid][6]}"
+                        f"\nDrive Gain: {state['combo_storage'][uuid][7]-state['combo_storage'][uuid][4]}"
+                        f"\nSuper Gain: {state['combo_storage'][uuid][8]-state['combo_storage'][uuid][5]}"
+                        )
         ui.download(combo_string.encode('utf-8'), f'{name}.txt')
 
     def deleteCombo(state, uuid, row):
@@ -672,7 +724,7 @@ def main_page():
                     ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
 
         # main body
-        with ui.column().style('flex:1; width:100%;min-width:240px;') as combo_column:
+        with ui.column().style('flex:1; width:100%;min-width:350px;') as combo_column:
             ui.markdown('#### **Combo string**:').style('flex:1; min-width: 240px')
             with ui.card().style('width: 100%; height:auto; min-height: 180px').classes('drop-shadow-md').props(
                     'square flat') as chips_card:
@@ -716,7 +768,6 @@ def main_page():
                     ui.label('No moves selected. Select some moves first!')
                 with ui.grid(columns=1).style('row:auto; width:100%;') as table_dialog_grid:
                     ui.button('Close', on_click=lambda: table_dialog.close()).style('justify-self:center;')
-
         with ui.dialog() as save_combo_dialog:
             with ui.card().style('width:auto; height:auto;'):
                 save_combo_dialog_input = ui.input('Combo name').on('keydown.enter', lambda: save_combo_dialog.submit(
@@ -725,7 +776,6 @@ def main_page():
                     ui.button('Save', on_click=lambda: save_combo_dialog.submit(
                         save_combo_dialog_input.value) if save_combo_dialog_input else save_combo_dialog_input.set_value(
                         '')).style('justify-self:center;')
-
         with ui.dialog() as faq:
             with ui.card().style('width:auto; height:auto') as faq_text:
                 ui.markdown('#### **FAQ**')
@@ -751,7 +801,7 @@ def main_page():
                 ui.markdown(
                     'There are a number of keywords you might come across when selecting your moves from the drop-down. Check the expansion below for a full list.')
                 with ui.expansion('Move keywords'):
-                    None #ui.table()
+                    ui.table(columns=state['faq_tables']['term_columns'], rows=state['faq_tables']['move_term_rows'], row_key='name', column_defaults={'align':'left'}).props('wrap-cells')
 
                 ui.markdown('###### **How does the calculation work?**')
 
@@ -776,16 +826,16 @@ def main_page():
                     'The columns in the data table might not be self-explanatory unless you have an decent understanding of the scaling calculation for Street Fighter 6. You can open the expansion below for an explanation of each column.')
 
                 with ui.expansion('Calculation keywords'):
-                     None #ui.table()
+                     ui.table(columns=state['faq_tables']['term_columns'], rows=state['faq_tables']['data_term_rows'], row_key='name', column_defaults={'align':'left'}).props('wrap-cells')
 
-                ui.markdown('######**How did you make this?**')
+                ui.markdown('######**How and why did you make this?**')
 
-                ui.markdown('This tool is built in Python using NiceGui.io')
+                ui.markdown('This tool is built in Python using [NiceGui](https://nicegui.io/)! I built it as an exercise for myself to learn some Python and turn a silly idea I had into something the Fighting Game Community might find useful. I am very unemployed right now.')
 
                 ui.markdown('######**Something seems broken…**')
 
                 ui.markdown(
-                    'I am not surprised! [Please submit it as a bug report](https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header) using the button in the bottom left of you screen. Please share as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
+                    'I am not surprised! [Please submit it as a bug report](https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header). Please share as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
 
         #footer
         with ui.row().style('width:100%'):
@@ -802,7 +852,7 @@ def main_page():
                     'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
 
-ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg',on_air=False,viewport='width=device-width, user-scalable=no')
+ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg',on_air=False,reload='FLY_ALLOC_ID' not in os.environ,viewport='width=device-width, user-scalable=no')
 
 #to do:
 # create definitions for keywords
