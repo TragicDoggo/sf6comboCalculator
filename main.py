@@ -295,7 +295,7 @@ def main_page():
                         selected=selected,
                         on_value_change=lambda: removeMove(new_move),selectable=True,on_selection_change= lambda: updateSelected(state)
                     ).props('square flat size=18px')
-                updateChips(state)
+                calculateData(state)
                 updateSelected(state)
             except Exception as e:
                 print(f'No move selected:{e}')
@@ -346,7 +346,6 @@ def main_page():
 
     def updateChips(state):
         state['move_list'] = [chip.text for chip in chips]
-        calculateData(state)
 
     def removeMove(chip):
         chip.delete()
@@ -393,6 +392,7 @@ def main_page():
         calculateData(state)
 
     def calculateData(state):
+        updateChips(state)
         move_dict = m.get_selected_moves_data(state['all_moves'], state['move_list'])
         state['drive_gauge'] = drive_slider.value
         state['super_gauge'] = super_slider.value
