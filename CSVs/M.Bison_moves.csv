@@ -43,7 +43,7 @@ Bomb/Mine (timer expired),Special,500,1,None,1,0,0,0,1.2,1.2,600,600,500,2000,Ye
 236MK,Special,900,1,None,0.8,0,0,0,1.2,1.2,1080,1080,1000,2000,Yes,
 236HK,Special,1200,1,None,1,0,0,0,1.2,1.2,1440,1440,1200,2500,Yes,
 28K,Special,0,0,None,1,0,0,0,1.2,1.2,0,0,0,0,Yes,
-28K > K,Special,,1,None,1,0,0,0,1.2,1.2,0,0,1200,2500,Yes,
+28K > K,Special,800,1,None,1,0,0,0,1.2,1.2,0,0,1200,2500,Yes,
 P after blocked 28K > K,Special,800,1,None,1,0,0,0,1.2,1.2,960,960,1200,2500,Yes,
 28K > P,Special,800,1,None,1,0,0,0,1.2,1.2,960,960,1200,2500,Yes,
 28K > P (detonate bomb),Special,2000,1,None,1,0,0,0,1.2,1.2,2400,2400,2300,5750,Yes,
