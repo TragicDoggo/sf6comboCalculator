@@ -101,7 +101,7 @@ def main_page():
                               </svg>
                         ''',
         # character UI colours and icons
-        'char_custom_dict': {'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'],
+        'char_custom_dict': {#'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'],
                              'A.K.I.': ['#6b254b', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/A.K.I..png'],
                              'Akuma': ['#8e1f11', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Akuma.png'],
                              'Blanka': ['#036c03', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Blanka.png'],
@@ -186,7 +186,7 @@ def main_page():
     # set ui defaults
     ui.colors()
     dark = ui.dark_mode()
-    ui.colors(primary='#465261',dark='#121212')
+    colors = ui.colors(primary='#465261',dark='#121212')
     ui.card.default_style('width: 250px; height: 220px')
 
     def characterSpecificStuff(state):
@@ -235,11 +235,13 @@ def main_page():
         move_type_toggle.set_options(state['move_types'])
         move_type_toggle.set_value(state['move_types'])
         clearList(state)
-        ui.colors(primary=state['char_custom_dict'][state['character']][0]).update()
         character_portrait.set_source(state['char_custom_dict'][selected_character][1])
         character_label.set_content(f'###### **{selected_character}**')
         characterSpecificStuff(state)
         filterMoves(state['move_types'],state)
+        for button in char_row:
+            button.clear()
+        char_select.close()
         return selected_character
 
     def filterMoves(value,state):
@@ -344,13 +346,13 @@ def main_page():
                 createChip(chip.text, False,state)
                 chip.selected = False
 
-    def updateChips(state):
+    def updateMovesFromChips(state):
         state['move_list'] = [chip.text for chip in chips]
 
     def removeMove(chip):
         chip.delete()
         updateSelected(state)
-        updateChips(state)
+        calculateData(state)
 
     def clearList(state):
         chips_to_delete = []
@@ -364,7 +366,7 @@ def main_page():
             state['chips_selected'] = False
         else:
             chips.clear()
-        updateChips(state)
+        calculateData(state)
 
     def updateCounter(state, value):
         if value != 'PC':
@@ -392,7 +394,7 @@ def main_page():
         calculateData(state)
 
     def calculateData(state):
-        updateChips(state)
+        updateMovesFromChips(state)
         move_dict = m.get_selected_moves_data(state['all_moves'], state['move_list'])
         state['drive_gauge'] = drive_slider.value
         state['super_gauge'] = super_slider.value
@@ -647,42 +649,47 @@ def main_page():
         del state['combo_storage'][uuid]
         row.delete()
 
-    with (ui.row().style('width:100%;')):
+    def hoverStart(button,text):
+        with button:
+            with ui.row().style('width:100%; height:100%; justify-content: center; align-content: center;'):
+                ui.label(text)
+
+    def hoverEnd(button):
+        button.clear()
+
+    with ((ui.row().style('width:100%;'))):
+        # character select dialog
+        with ui.dialog(value=True) as char_select:
+            with ui.card().classes('object-fill'
+                                   ).style('width:auto; height: auto; justify-content: center; align-content: center;'):
+                ui.markdown('#### **Select a character**').style('justify-self:center; align-self:center')
+                with ui.row().style('width: 300px; height: 100%;justify-content: center; align-content: center;'
+                                   ).classes('gap-1') as char_row:
+                    for character in state['char_custom_dict'].keys():
+                        state['char_custom_dict'][character].append(None)
+                        character_button = ui.image(state['char_custom_dict'][character][1],
+                                                  ).style('height:56px;width:56px;justify-content: center; align-content: center;'
+                                                  ).classes('brightness-100 shadow-md rounded-borders'
+                                                  ).on('mousedown',lambda char = character: characterSelected(state, char)
+                                                  ).on('mouseenter', lambda char = character: hoverStart(state['char_custom_dict'][char][2],char)
+                                                  ).on('mouseleave', lambda char = character: hoverEnd(state['char_custom_dict'][char][2]))
+                        state['char_custom_dict'][character][2] = character_button
+                ui.button(text='See changes', icon='open_in_new', on_click= lambda: ui.navigate.to('https://github.com/TragicDoggo/sf6comboCalculator/activity',new_tab=True)).style('justify-self:center; align-self:center')
         # left side
         with ui.column().style('min-width:240px;') as parameter_column:
-            with ui.card().style('width:100%;height:100%;').props('square flat'):
-                # dropdown button for selecting a character. runs update_dropdown function on selection which loads the character moves and sets them as options for the move_dropdown
-                with ui.row():
-                    with ui.button('Character', icon='switch_account').style('width: auto').props('align=left icon-right=arrow_drop_down') as select_character_button:
-                        with ui.menu().style('width: 180px'):
-                            ui.menu_item('A.K.I.').on('mousedown',lambda: characterSelected(state, 'A.K.I.'))
-                            ui.menu_item('Akuma').on('mousedown', lambda: characterSelected(state, 'Akuma'))
-                            ui.menu_item('Blanka').on('mousedown',lambda: characterSelected(state, 'Blanka'))
-                            ui.menu_item('Cammy').on('mousedown', lambda: characterSelected(state, 'Cammy'))
-                            ui.menu_item('Chun-Li').on('mousedown', lambda: characterSelected(state, 'Chun-Li'))
-                            ui.menu_item('Dee Jay').on('mousedown', lambda: characterSelected(state, 'Dee Jay'))
-                            ui.menu_item('Dhalsim').on('mousedown', lambda: characterSelected(state, 'Dhalsim'))
-                            ui.menu_item('Ed').on('mousedown',lambda: characterSelected(state, 'Ed'))
-                            ui.menu_item('E.Honda').on('mousedown', lambda: characterSelected(state, 'E.Honda'))
-                            ui.menu_item('Guile').on('mousedown',lambda: characterSelected(state, 'Guile'))
-                            ui.menu_item('Jamie').on('mousedown',lambda: characterSelected(state, 'Jamie'))
-                            ui.menu_item('JP').on('mousedown',lambda: characterSelected(state, 'JP'))
-                            ui.menu_item('Juri').on('mousedown',lambda: characterSelected(state, 'Juri'))
-                            ui.menu_item('Ken').on('mousedown',lambda: characterSelected(state, 'Ken'))
-                            ui.menu_item('Kimberly').on('mousedown', lambda: characterSelected(state, 'Kimberly'))
-                            ui.menu_item('Lily').on('mousedown', lambda: characterSelected(state, 'Lily'))
-                            ui.menu_item('Luke').on('mousedown', lambda: characterSelected(state, 'Luke'))
-                            ui.menu_item('M.Bison').on('mousedown', lambda: characterSelected(state, 'M.Bison'))
-                            ui.menu_item('Manon').on('mousedown', lambda: characterSelected(state, 'Manon'))
-                            ui.menu_item('Marisa').on('mousedown', lambda: characterSelected(state, 'Marisa'))
-                            ui.menu_item('Rashid').on('mousedown', lambda: characterSelected(state, 'Rashid'))
-                            ui.menu_item('Ryu').on('mousedown', lambda: characterSelected(state, 'Ryu'))
-                            ui.menu_item('Terry').on('mousedown', lambda: characterSelected(state, 'Terry'))
-                            ui.menu_item('Zangief').on('mousedown', lambda: characterSelected(state, 'Zangief'))
-                #character label and portrait
+             with ui.card().style('width:100%;height:100%;').props('square flat'):
+            #character label and portrait
                 with ui.row().style('width: 100%; justify-content: center;'):
                     character_label = ui.markdown('###### None').style('width:100%; text-align: center;')
-                    character_portrait = ui.image(state['char_custom_dict'][state['character']][1]).style('height:56px;width:56px').classes('shadow-md rounded-borders')
+                    character_portrait = ui.image('https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'
+                                                  ).style('height:56px;width:56px'
+                                                  ).classes('shadow-md rounded-borders brightness-100'
+                                                  ).on('mousedown', lambda: char_select.open()
+                                                  ).on('load', lambda: ui.colors(primary=state['char_custom_dict'][state['character']][0])
+                                                  if state['character'] in state['char_custom_dict'].keys()
+                                                  else ui.colors(primary='#465261')
+                                                       ).on('mouseenter', lambda: hoverStart(character_portrait, 'Switch')
+                                                            ).on('mouseleave', lambda: hoverEnd(character_portrait))
                 #character move select box and filter
                 ui.markdown('**Character Moves:**')
                 # move select dropdown
@@ -782,19 +789,22 @@ def main_page():
 
                 ui.markdown('###### **What is this?**')
 
-                ui.markdown('This is a (fairly) simple calculator for Street Fighter 6 combos built in Python. I built it to develop my programming skills. Hopefully you can find it useful/interesting/informative!')
+                ui.markdown('This is a (fairly) simple calculator for Street Fighter 6 combos built in Python. '
+                            'I built it to develop my programming skills. Hopefully you can find it useful/interesting/informative!')
 
                 ui.markdown('###### **How do I use it?**')
 
                 ui.markdown(
-                    'First, select a character from the ‘Character’ menu, then select your moves from the ‘Select Move’ drop-down below it. You can experiment with counter types, perfect parry, cancelling from a special into a SA3 or CA or a number of character-specific options.')
+                    'First, select a character from the ‘Character’ menu, then select your moves from the ‘Select Move’ '
+                    'drop-down below it. You can experiment with counter types, perfect parry, cancelling from a special into a SA3 or CA or a number of character-specific options.')
 
                 ui.markdown(
                     'Having an understanding of which moves combo into each other is required to take advantage of this tool fully.')
 
                 ui.markdown('###### **How do I save my combos?**')
 
-                ui.markdown('You can click “Save” next to the final damage on the right of your screen. Once you have named your combo you can click “download" to save it to a text file.')
+                ui.markdown('You can click “Save” next to the final damage on the right of your screen. Once you have named your '
+                            'combo you can click “download" to save it to a text file.')
 
                 ui.markdown('###### **What does *term* mean when selecting my moves?**')
 
@@ -806,19 +816,27 @@ def main_page():
                 ui.markdown('###### **How does the calculation work?**')
 
                 ui.markdown(
-                    'The simplest scaling calculations in Street Fighter 6 simply involve multiplying the base damage of an attack by a percentage which decreases depending on which move in the combo you are calculating.')
+                    'The simplest scaling calculations in Street Fighter 6 simply involve multiplying the base damage of '
+                    'an attack by a percentage which decreases depending on which move in the combo you are calculating.')
 
                 ui.markdown(
                     'Most simple combos deal 100% for the first 2 hits, then drops to 80%, then 70%, 60%, etc, eventually dropping all the way to 10%.')
 
                 ui.markdown(
-                    'However, certain moves change this “scaling route”. The most common attacks which have this affect are light normal attacks, which basically skip the first multiplier of the example above, dealing 100%, then 80%, 70% and so on.')
+                    'However, certain moves change this “scaling route”. The most common attacks which have this affect are light normal attacks, '
+                    'which basically skip the first multiplier of the example above, dealing 100%, then 80%, 70% and so on.')
 
                 ui.markdown(
-                    'Certain moves also apply additional scaling to themselves or the next move in the combo, and actions like Drive Rush can apply an additional scaling multiplier to the combo.')
+                    'Certain moves also apply additional scaling to themselves or the next move in the combo, and actions '
+                    'like Drive Rush can apply an additional scaling multiplier to the combo.')
 
                 ui.markdown(
-                    'Honestly, the number of factors which affect scaling is more than I can cover here. I recommend you experiment with the tool (especially using the "Data" button to view the breakdown of the calculation) and check out [the SuperCombo Wiki](https://wiki.supercombo.gg) if you want a better explanation!')
+                    'Honestly, the number of factors which affect scaling is more than I can cover here. I recommend you experiment with the tool '
+                    '(especially using the "Data" button to view the breakdown of the calculation) and check out the SuperCombo Wiki '
+                    'if you want a better explanation!')
+                ui.button('Read about scaling', icon='open_in_new', on_click=lambda: ui.navigate.to(
+                    'https://wiki.supercombo.gg/w/Street_Fighter_6/Game_Data#Damage_Scaling',
+                    new_tab=True))
 
                 ui.markdown('######**What does *term* mean when I view the data?**')
 
@@ -830,12 +848,21 @@ def main_page():
 
                 ui.markdown('######**How and why did you make this?**')
 
-                ui.markdown('This tool is built in Python using [NiceGui](https://nicegui.io/)! I built it as an exercise for myself to learn some Python and turn a silly idea I had into something the Fighting Game Community might find useful. I am very unemployed right now.')
+                ui.markdown('This tool is built in Python using NiceGui! I built it as an exercise for myself to learn '
+                            'some Python and turn a silly idea I had into something the Fighting Game Community might find useful. '
+                            'I am very unemployed right now.')
+                ui.button('Check out NiceGUI', icon='open_in_new', on_click=lambda: ui.navigate.to(
+                    'https://nicegui.io/',
+                    new_tab=True))
 
                 ui.markdown('######**Something seems broken…**')
 
                 ui.markdown(
-                    'I am not surprised! [Please submit it as a bug report](https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header). Please share as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
+                    'I am not surprised! Please submit it as a bug report, sharing '
+                    'as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. '
+                    'If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, '
+                    'and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
+                ui.button('Submit a bug report', icon='open_in_new', on_click= lambda: ui.navigate.to('https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header',new_tab=True))
 
         #footer
         with ui.row().style('width:100%'):
@@ -847,7 +874,7 @@ def main_page():
                     bug_report = ui.menu_item('Bug report', on_click=lambda: ui.navigate.to(
                         'https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header',
                         new_tab=True))
-            with ui.link(target='https://ko-fi.com/tragicdog'):
+            with ui.link(target='https://ko-fi.com/tragicdog', new_tab=True):
                 ui.image(
                     'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
