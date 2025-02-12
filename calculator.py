@@ -52,7 +52,7 @@ class comboCalculator:
                     multiplier = multiplier * modifier[1]
             return multiplier
 
-        def calculateScaling(move, scaling_index, additional_multiplier,scaling_route,drc_multiplier,additional_scaling,jamie_multiplier,state):
+        def calculateScaling(move, scaling_index, additional_multiplier,scaling_route,additional_scaling,jamie_multiplier,state):
             additional_scaling = additional_scaling + move['Immediate scaling']
             if state['cancelled_special'] and (move['Move'] == 'CA' or move['Move'] == 'SA3' or move['Move'] == 'Raging Demon'):
                 additional_scaling = additional_scaling -0.1
@@ -60,7 +60,7 @@ class comboCalculator:
                  scaling_route_multiplier = 0.1
             else:
                 scaling_route_multiplier = scaling_route[scaling_index] + additional_scaling
-            move_scaling = additional_multiplier * scaling_route_multiplier * drc_multiplier * jamie_multiplier
+            move_scaling = additional_multiplier * scaling_route_multiplier * jamie_multiplier
             additional_scaling = additional_scaling + move['Next scaling']
             return move_scaling,additional_scaling
 
@@ -148,17 +148,19 @@ class comboCalculator:
                 jamie_multiplier = 1.15
             if move['Counts as'] > 0: #only increases scaling index and recalculates instance scaling if the move counts as a hit
                 scaling_index = scaling_index + 1 #increase index by one by default
-                scaling_data = calculateScaling(move, scaling_index, additional_multiplier,scaling_route,drc_multiplier,additional_scaling,jamie_multiplier,state) #calculate scaling
+                scaling_data = calculateScaling(move, scaling_index, additional_multiplier,scaling_route,additional_scaling,jamie_multiplier,state) #calculate scaling
                 instance_scaling = math.floor(scaling_data[0]*100)/100
                 additional_scaling = scaling_data[1]
                 scaling_index = scaling_index + move['Counts as'] - 1 #increase index again if move counts as more than one hit in combo
-            if move['Min scaling'] > instance_scaling:
-                instance_scaling = move['Min scaling']
             if scaling_index < 1:
                 move_damage = move[counter_dict[state['counter']]]
             else:
                 move_damage = move['Damage']
-            instance_damage = math.floor(move_damage * instance_scaling)
+            final_scaling = math.floor((instance_scaling * drc_multiplier)*100)/100
+            if move['Min scaling'] > final_scaling:
+                final_scaling = move['Min scaling']
+            instance_damage = math.floor(move_damage * final_scaling)
+            print(final_scaling)
             combo_damage = combo_damage + instance_damage
             if move['Move type'] == 'Overdrive':
                 can_gain_drive = True
@@ -167,7 +169,7 @@ class comboCalculator:
             current_move_dict = {
                 'Move name':move['Move'],
                 'Scaled damage':instance_damage,
-                'Final scaling':instance_scaling,
+                'Final scaling':final_scaling,
                 'Counts as (hits)':move['Counts as'],
                 'Immediate scaling':move['Immediate scaling'],
                 'Next move scaling':move['Next scaling'],

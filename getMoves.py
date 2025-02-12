@@ -74,32 +74,6 @@ class moves:
         except TypeError as e:
              print(f"Wrong data type: {e}")
 
-    # def get_moves(character, file_name, move_type, jamie_dl):
-    #     '''takes a file name as an argument, opens that file and returns a list of all the moves in the file
-    #
-    #     :param file_name: the file name to be opened
-    #     :return: a list of moves available in that file
-    #     '''
-    #     # create an empty list for moves
-    #     # tries to read the file passes as an argument and create a list named moves based on all the entries in the 'Move' column
-    #
-    #     try:
-    #         with open(file_name, 'r') as csv_file:
-    #             reader = csv.DictReader(csv_file, delimiter=',')
-    #             moves = []
-    #             if character == 'Jamie':  # and jamie_dl == int:
-    #                 for row in reader:
-    #                     if (row['Visible?'] == 'Yes') & (row['Move type'] in move_type):
-    #                         moves.append(row['Move'])
-    #             else:
-    #                 for row in reader:
-    #                     if (row['Visible?'] == 'Yes') & (row['Move type'] in move_type):
-    #                         moves.append(row['Move'])
-    #         return moves
-    #
-    #     except Exception as e:
-    #         print(f'error reading file: {e} in get_moves')
-
     def get_selected_moves_data(all_moves_data, selected_moves):
         '''takes a file name and a list of moves as arguments. Returns a dictionary containing each move in the provided list and the additional data related to it
 
@@ -116,9 +90,9 @@ class moves:
                     if move[1] in all_moves_data:
                         if all_moves_data[move[1]]['Next hit'] != 'None':
                             selected_moves.insert(move[0] + 1, all_moves_data[move[1]]['Next hit'])
-            for move in selected_moves:
-                if move in all_moves_data:
-                    selected_data.append(all_moves_data[move])
+                for move in selected_moves:
+                    if move in all_moves_data:
+                        selected_data.append(all_moves_data[move])
 
         except KeyError as e:
             print(f"Missing column in file: {e}")

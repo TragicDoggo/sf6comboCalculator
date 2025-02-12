@@ -101,31 +101,33 @@ def main_page():
                               </svg>
                         ''',
         # character UI colours and icons
-        'char_custom_dict': {#'None': ['#465261', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'],
-                             'A.K.I.': ['#6b254b', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/A.K.I..png'],
-                             'Akuma': ['#8e1f11', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Akuma.png'],
-                             'Blanka': ['#036c03', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Blanka.png'],
-                             'Cammy': ['#355f97', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Cammy.png'],
-                             'Chun-Li': ['#6483de', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Chun-Li.png'],
-                             'Dee Jay': ['#008b0c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dee Jay.png'],
-                             'Dhalsim': ['#d7a403', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Dhalsim.png'],
-                             'Ed': ['#086b7a', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ed.png'],
-                             'E.Honda': ['#a90600', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/E.Honda.png'],
-                             'Guile': ['#316326', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Guile.png'],
-                             'Jamie': ['#bc9c0e', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Jamie.png'],
-                             'JP': ['#3c2a51', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/JP.png'],
-                             'Juri': ['#601199', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Juri.png'],
-                             'Ken': ['#bd1613', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ken.png'],
-                             'Kimberly': ['#fa77b7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Kimberly.png'],
-                             'Lily': ['#d78076', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Lily.png'],
-                             'Luke': ['#4628c9', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Luke.png'],
-                             'M.Bison': ['#61346d', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/M.Bison.png'],
-                             'Manon': ['#796dc7', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Manon.png'],
-                             'Marisa': ['#b90302', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Marisa.png'],
-                             'Rashid': ['#cb7c1c', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Rashid.png'],
-                             'Ryu': ['#863532', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Ryu.png'],
-                             'Terry': ['#8e1b18', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Terry.png'],
-                             'Zangief': ['#c91212', 'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/Zangief.png']},
+        'char_custom_dict': {
+                             'A.K.I.': ['#161f2b', 'images/A.K.I..png'],
+                             'Akuma': ['#ac2100', 'images/Akuma.png'],
+                             'Blanka': ['#3d6b00', 'images/Blanka.png'],
+                             'Cammy': ['#a80a29', 'images/Cammy.png'],
+                             'Chun-Li': ['#5d71b0', 'images/Chun-Li.png'],
+                             'Dee Jay': ['#63630b', 'images/Dee Jay.png'],
+                             'Dhalsim': ['#9f5c00', 'images/Dhalsim.png'],
+                             'Ed': ['#09565e', 'images/Ed.png'],
+                             'E.Honda': ['#570000', 'images/E.Honda.png'],
+                             'Guile': ['#343420', 'images/Guile.png'],
+                             'Jamie': ['#765819', 'images/Jamie.png'],
+                             'JP': ['#550127', 'images/JP.png'],
+                             'Juri': ['#6d2653', 'images/Juri.png'],
+                             'Ken': ['#ab3d00', 'images/Ken.png'],
+                             'Kimberly': ['#9e4b6f', 'images/Kimberly.png'],
+                             'Lily': ['#38d46f', 'images/Lily.png'],
+                             'Luke': ['#1646ac', 'images/Luke.png'],
+                             'M.Bison': ['#553b59', 'images/M.Bison.png'],
+                             'Mai':['#b07166','images/Mai.png'],
+                             'Manon': ['#7a84a9', 'images/Manon.png'],
+                             'Marisa': ['#990000', 'images/Marisa.png'],
+                             'Rashid': ['#b08501', 'images/Rashid.png'],
+                             'Ryu': ['#9c6471', 'images/Ryu.png'],
+                             'Terry': ['#1d6161', 'images/Terry.png'],
+                             'Zangief': ['#a30200', 'images/Zangief.png']},
+
          # character specific variables
         'character_specifics': {'Jamie': 2,
                                 'A.K.I.': 0,
@@ -276,9 +278,9 @@ def main_page():
                     'Drive': 'light-green-6'  # Drive gauge stuff
                 }
                 colours_regex = {
-                    re.compile(r'\d.*L[KP]'): 'light-blue-11',  # Lights
-                    re.compile(r'\d.*M[KP]'): 'amber-4',  # Mediums
-                    re.compile(r'\d.*H[KP]'): 'red-5',  # Heavies
+                    re.compile(r'[>\d].*L[KP]'): 'light-blue-11',  # Lights
+                    re.compile(r'[>\d].*M[KP]'): 'amber-4',  # Mediums
+                    re.compile(r'[>\d].*H[KP]'): 'red-5',  # Heavies
                 }
                 if move_type in colours_keywords.keys():
                     colour = colours_keywords[move_type]
@@ -299,8 +301,10 @@ def main_page():
                     ).props('square flat size=18px')
                 calculateData(state)
                 updateSelected(state)
+
             except Exception as e:
                 print(f'No move selected:{e}')
+
 
     def updateSelected(state):
         clear_button.set_text('Clear all')
@@ -681,7 +685,7 @@ def main_page():
             #character label and portrait
                 with ui.row().style('width: 100%; justify-content: center;'):
                     character_label = ui.markdown('###### None').style('width:100%; text-align: center;')
-                    character_portrait = ui.image('https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/None.png'
+                    character_portrait = ui.image('images/None.png'
                                                   ).style('height:56px;width:56px'
                                                   ).classes('shadow-md rounded-borders brightness-100'
                                                   ).on('mousedown', lambda: char_select.open()
@@ -876,10 +880,10 @@ def main_page():
                         new_tab=True))
             with ui.link(target='https://ko-fi.com/tragicdog', new_tab=True):
                 ui.image(
-                    'https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/kofi.png').style(
+                    'images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
 
-ui.run(title='Combo Calculator',favicon='https://raw.githubusercontent.com/TragicDoggo/sf6comboCalculator/refs/heads/master/images/icon.svg',on_air=False,reload='FLY_ALLOC_ID' not in os.environ,viewport='width=device-width, user-scalable=no')
+ui.run(title='Combo Calculator',favicon='images/icon.webp',on_air=False,reload='FLY_ALLOC_ID' not in os.environ,viewport='width=device-width, user-scalable=no')
 
 #to do:
 # create definitions for keywords
