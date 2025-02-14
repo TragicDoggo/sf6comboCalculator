@@ -1,4 +1,4 @@
-from nicegui import ui
+from nicegui import ui,app
 from getMoves import moves as m
 from calculator import comboCalculator as cc
 import os
@@ -12,15 +12,14 @@ import pandas as pd
 def main_page():
     state = {
         # variables for loading moves
-        'file_name': '',
         'all_moves': {},
-        'available_moves':[],
+        'available_moves': [],
         'move_list': [],
         'selected_chips': {},
-        'chips_selected':False,
+        'chips_selected': False,
         'character': 'None',
-        'move_types':[],
-        #variables for calculating damage/scaling/drive gauge
+        'move_types': [],
+        # variables for calculating damage/scaling/drive gauge
         'counter': 'None',
         'perfect_parry': False,
         'cancelled_special': False,
@@ -28,11 +27,11 @@ def main_page():
         'additional_damage': 0,
         'drive_gauge': 60000.0,
         'super_gauge': 30000.0,
-        #combo_data contains  cleaned up data for the calculation per-move
+        # combo_data contains  cleaned up data for the calculation per-move
         'combo_data': [{'Move name': None, 'Final damage': None, 'Final scaling': None, 'Route scaling': None,
                         'Drive Rush scaling': None, 'Counts as x hits': None, 'Immediate scaling': None,
                         'Next move scaling': None, 'Raw damage': None, 'Combo damage': None, 'Drive gain': None}],
-        #combo_storage will store key information about a combo when it is saved so it can be restored later by the user
+        # combo_storage will store key information about a combo when it is saved so it can be restored later by the user
         'combo_storage': {},
         # string storing svg data for the drive gauge to update
         'drive_gauge_svg': '''
@@ -102,126 +101,163 @@ def main_page():
                         ''',
         # character UI colours and icons
         'char_custom_dict': {
-                             'A.K.I.': ['#161f2b', 'images/A.K.I..png'],
-                             'Akuma': ['#ac2100', 'images/Akuma.png'],
-                             'Blanka': ['#3d6b00', 'images/Blanka.png'],
-                             'Cammy': ['#a80a29', 'images/Cammy.png'],
-                             'Chun-Li': ['#5d71b0', 'images/Chun-Li.png'],
-                             'Dee Jay': ['#63630b', 'images/Dee Jay.png'],
-                             'Dhalsim': ['#9f5c00', 'images/Dhalsim.png'],
-                             'Ed': ['#09565e', 'images/Ed.png'],
-                             'E.Honda': ['#570000', 'images/E.Honda.png'],
-                             'Guile': ['#343420', 'images/Guile.png'],
-                             'Jamie': ['#765819', 'images/Jamie.png'],
-                             'JP': ['#550127', 'images/JP.png'],
-                             'Juri': ['#6d2653', 'images/Juri.png'],
-                             'Ken': ['#ab3d00', 'images/Ken.png'],
-                             'Kimberly': ['#9e4b6f', 'images/Kimberly.png'],
-                             'Lily': ['#38d46f', 'images/Lily.png'],
-                             'Luke': ['#1646ac', 'images/Luke.png'],
-                             'M.Bison': ['#553b59', 'images/M.Bison.png'],
-                             'Mai':['#b07166','images/Mai.png'],
-                             'Manon': ['#7a84a9', 'images/Manon.png'],
-                             'Marisa': ['#990000', 'images/Marisa.png'],
-                             'Rashid': ['#b08501', 'images/Rashid.png'],
-                             'Ryu': ['#9c6471', 'images/Ryu.png'],
-                             'Terry': ['#1d6161', 'images/Terry.png'],
-                             'Zangief': ['#a30200', 'images/Zangief.png']},
+            'A.K.I.': ['#161f2b', 'images/A.K.I..png'],
+            'Akuma': ['#ac2100', 'images/Akuma.png'],
+            'Blanka': ['#3d6b00', 'images/Blanka.png'],
+            'Cammy': ['#a80a29', 'images/Cammy.png'],
+            'Chun-Li': ['#5d71b0', 'images/Chun-Li.png'],
+            'Dee Jay': ['#63630b', 'images/Dee Jay.png'],
+            'Dhalsim': ['#9f5c00', 'images/Dhalsim.png'],
+            'Ed': ['#09565e', 'images/Ed.png'],
+            'E.Honda': ['#570000', 'images/E.Honda.png'],
+            'Guile': ['#343420', 'images/Guile.png'],
+            'Jamie': ['#765819', 'images/Jamie.png'],
+            'JP': ['#550127', 'images/JP.png'],
+            'Juri': ['#6d2653', 'images/Juri.png'],
+            'Ken': ['#ab3d00', 'images/Ken.png'],
+            'Kimberly': ['#9e4b6f', 'images/Kimberly.png'],
+            'Lily': ['#38d46f', 'images/Lily.png'],
+            'Luke': ['#1646ac', 'images/Luke.png'],
+            'M.Bison': ['#553b59', 'images/M.Bison.png'],
+            'Mai': ['#b07166', 'images/Mai.png'],
+            'Manon': ['#7a84a9', 'images/Manon.png'],
+            'Marisa': ['#990000', 'images/Marisa.png'],
+            'Rashid': ['#b08501', 'images/Rashid.png'],
+            'Ryu': ['#9c6471', 'images/Ryu.png'],
+            'Terry': ['#1d6161', 'images/Terry.png'],
+            'Zangief': ['#a30200', 'images/Zangief.png']},
 
-         # character specific variables
+        # character specific variables
         'character_specifics': {'Jamie': 2,
                                 'A.K.I.': 0,
-                                'Kimberly' : False},
-        'current_input' : '',
-        'option_index' : -1,
+                                'Kimberly': False},
         # faq term info
         'faq_tables': {'term_columns': [{'name': 'name', 'label': 'Name', 'field': 'name', 'sortable': False},
-                                                {'name': 'meaning', 'label': 'Meaning', 'field': 'meaning',
-                                                 'sortable': False}],
+                                        {'name': 'meaning', 'label': 'Meaning', 'field': 'meaning',
+                                         'sortable': False}],
                        'move_term_rows': [
-                            {'name': '[X] hit only', 'meaning': 'Only the X hit makes contact with the opponent'},
-                            {'name': '[X] hits', 'meaning': 'Indicates the number of hits which make contact with the opponent, e.g. you may choose the 1 hit version of a move as the move can only be cancelled after the first hit'},
-                            {'name': '> L/M/HK/P', 'meaning': 'The > symbol indicates a move was cancelled or a follow-up button was pressed, for example, 214K > K. However a move which starts with the > symbol must be preceded by a move which can cancel into it (e.g. Juri\'s 236MKHK > LK)'},
-                            {'name': '1st hit/last hit', 'meaning': 'Ed\'s SA2 is odd because it doesn\'t deal all damage at once, instead it deals it over 7 hits. This means that if you hit an opponent with the first hit of the SA2, then use a DP which results in them landing on the ball again, the damage of the second hit scaling of the SA2 will be calculated based on the hit from the DP. Basically, you need to manually add the 7 hits of the SA2, taking note of how many times the opponent hits the ball between other attacks to get an accurate calculation!'},
-                            {'name': 'air', 'meaning': 'The button combination is input in the air to perform the attack. For example, entering 214LK for a shoto on the ground would result in a Tatsu, in the air it would result in an Air Tatsu'},
-                            {'name': 'airborne opponent', 'meaning': 'Version of that move which is performed when the opponent is airborne'},
-                            {'name': 'basic/OD/SA1 charge', 'meaning': 'The type of charge used to activate the Blanka-chan doll'},
-                            {'name': 'blocked', 'meaning': 'Version of that move which occurs when the attack is blocked by the opponent'},
-                            {'name': 'burst', 'meaning': 'The move bursts the bubble of A.K.I.\'s Nightshade Pulse, as opposed to the bubble hitting the opponent and then the whip follow up hitting them'},
-                            {'name': 'cancelled/cancel', 'meaning': 'The move is cancelled, sometimes into a specific move. Changes the damage and other properties'},
-                            {'name': 'charge lv[X]', 'meaning': 'The button is held down to produce a more powerful version of the move. The longer the button is held, the higher the charge level. Charge moves don\'t usually have more than 3 levels: the base attack, level 2 charge and level 3 charge'},
-                            {'name': 'close/far/mid', 'meaning': 'How close the character is to the opponent, changing the move\'s properties or which move is performed'},
-                            {'name': 'counter', 'meaning': 'The move absorbs a hit from the opponent, triggering the counter version of the move'},
-                            {'name': 'cross-up', 'meaning': 'Used when the move moves to the other side of the opponent, or crosses-up'},
-                            {'name': 'crouching opponent', 'meaning': 'Opponent is in a crouched state when the move hits'},
-                            {'name': 'delayed hit', 'meaning': 'Indicates that the first part of the move (maybe only the first active frame) whiffs leading to different properties'},
-                            {'name': 'denjin charge', 'meaning': 'Uses a denjin charge when performed'},
-                            {'name': 'detonate bomb', 'meaning': 'Manually trigger the explosion of the planted mine/bomb with this move'},
-                            {'name': 'drink', 'meaning': 'Jamie drinks after the move'},
-                            {'name': 'early/late', 'meaning': 'The timing of the move in the combo'},
-                            {'name': 'Enhanced', 'meaning': 'Version of the move performed when the character has resources which enhance that move, e.g. Juri Fuha stocks or Honda Sumo Spirit'},
-                            {'name': 'hold', 'meaning': 'Version of the move which is performed when the attack button is held after completing the motion'},
-                            {'name': 'install', 'meaning': 'A version of the move performed when the character is in an "install" state, such as Juri, Blanka or Guile\'s SA2'},
-                            {'name': 'level [X]', 'meaning': 'Indicates how many medals Manon has'},
-                            {'name': 'non-cinematic', 'meaning': 'When a Super\'s first hit misses it leads to a version of the move where the cinematic doesn\'t play and the damage is reduced'},
-                            {'name': 'perfect', 'meaning': 'Perfect timing for a charge move or a move which requires holding a button'},
-                            {'name': 'secret', 'meaning': 'A secret move (unlocked via letting a long taunt play out)'},
-                            {'name': 'timer expired', 'meaning': 'For moves which plant a bomb or mine, which will deal damage after a certain time. This move should be used at the point in the combo where the bomb/mine etc explodes due to the timer running out instead of manually triggering it'},
-                            {'name': 'toxic blossom', 'meaning': 'The move triggers the Toxic Blossom effect on a poisoned opponent, dealing additional damage'},
-                            {'name': 'whiff [X]', 'meaning': 'Indicates that part of the move missed the opponent, leading to different properties'},
-                            {'name': 'wind', 'meaning': 'Move is enhanced with an air current'}
-                                          ],
+                           {'name': '[X] hit only', 'meaning': 'Only the X hit makes contact with the opponent'},
+                           {'name': '[X] hits',
+                            'meaning': 'Indicates the number of hits which make contact with the opponent, e.g. you may choose the 1 hit version of a move as the move can only be cancelled after the first hit'},
+                           {'name': '> L/M/HK/P',
+                            'meaning': 'The > symbol indicates a move was cancelled or a follow-up button was pressed, for example, 214K > K. However a move which starts with the > symbol must be preceded by a move which can cancel into it (e.g. Juri\'s 236MKHK > LK)'},
+                           {'name': '1st hit/last hit',
+                            'meaning': 'Ed\'s SA2 is odd because it doesn\'t deal all damage at once, instead it deals it over 7 hits. This means that if you hit an opponent with the first hit of the SA2, then use a DP which results in them landing on the ball again, the damage of the second hit scaling of the SA2 will be calculated based on the hit from the DP. Basically, you need to manually add the 7 hits of the SA2, taking note of how many times the opponent hits the ball between other attacks to get an accurate calculation!'},
+                           {'name': 'air',
+                            'meaning': 'The button combination is input in the air to perform the attack. For example, entering 214LK for a shoto on the ground would result in a Tatsu, in the air it would result in an Air Tatsu'},
+                           {'name': 'airborne opponent',
+                            'meaning': 'Version of that move which is performed when the opponent is airborne'},
+                           {'name': 'basic/OD/SA1 charge',
+                            'meaning': 'The type of charge used to activate the Blanka-chan doll'},
+                           {'name': 'blocked',
+                            'meaning': 'Version of that move which occurs when the attack is blocked by the opponent'},
+                           {'name': 'burst',
+                            'meaning': 'The move bursts the bubble of A.K.I.\'s Nightshade Pulse, as opposed to the bubble hitting the opponent and then the whip follow up hitting them'},
+                           {'name': 'cancelled/cancel',
+                            'meaning': 'The move is cancelled, sometimes into a specific move. Changes the damage and other properties'},
+                           {'name': 'charge lv[X]',
+                            'meaning': 'The button is held down to produce a more powerful version of the move. The longer the button is held, the higher the charge level. Charge moves don\'t usually have more than 3 levels: the base attack, level 2 charge and level 3 charge'},
+                           {'name': 'close/far/mid',
+                            'meaning': 'How close the character is to the opponent, changing the move\'s properties or which move is performed'},
+                           {'name': 'counter',
+                            'meaning': 'The move absorbs a hit from the opponent, triggering the counter version of the move'},
+                           {'name': 'cross-up',
+                            'meaning': 'Used when the move moves to the other side of the opponent, or crosses-up'},
+                           {'name': 'crouching opponent',
+                            'meaning': 'Opponent is in a crouched state when the move hits'},
+                           {'name': 'delayed hit',
+                            'meaning': 'Indicates that the first part of the move (maybe only the first active frame) whiffs leading to different properties'},
+                           {'name': 'denjin charge', 'meaning': 'Uses a denjin charge when performed'},
+                           {'name': 'detonate bomb',
+                            'meaning': 'Manually trigger the explosion of the planted mine/bomb with this move'},
+                           {'name': 'drink', 'meaning': 'Jamie drinks after the move'},
+                           {'name': 'early/late', 'meaning': 'The timing of the move in the combo'},
+                           {'name': 'Enhanced',
+                            'meaning': 'Version of the move performed when the character has resources which enhance that move, e.g. Juri Fuha stocks or Honda Sumo Spirit'},
+                           {'name': 'hold',
+                            'meaning': 'Version of the move which is performed when the attack button is held after completing the motion'},
+                           {'name': 'install',
+                            'meaning': 'A version of the move performed when the character is in an "install" state, such as Juri, Blanka or Guile\'s SA2'},
+                           {'name': 'level [X]', 'meaning': 'Indicates how many medals Manon has'},
+                           {'name': 'non-cinematic',
+                            'meaning': 'When a Super\'s first hit misses it leads to a version of the move where the cinematic doesn\'t play and the damage is reduced'},
+                           {'name': 'perfect',
+                            'meaning': 'Perfect timing for a charge move or a move which requires holding a button'},
+                           {'name': 'secret', 'meaning': 'A secret move (unlocked via letting a long taunt play out)'},
+                           {'name': 'timer expired',
+                            'meaning': 'For moves which plant a bomb or mine, which will deal damage after a certain time. This move should be used at the point in the combo where the bomb/mine etc explodes due to the timer running out instead of manually triggering it'},
+                           {'name': 'toxic blossom',
+                            'meaning': 'The move triggers the Toxic Blossom effect on a poisoned opponent, dealing additional damage'},
+                           {'name': 'whiff [X]',
+                            'meaning': 'Indicates that part of the move missed the opponent, leading to different properties'},
+                           {'name': 'wind', 'meaning': 'Move is enhanced with an air current'}
+                       ],
                        'data_term_rows': [
-                            {'name': 'Move name', 'meaning': 'Inputs of the move'},
-                            {'name': 'Scaled damage', 'meaning': 'Damage of the move after scaling has been applied'},
-                            {'name': 'Final scaling', 'meaning': 'Scaling applied to the move after calculations have been performed'},
-                            {'name': 'Counts as (hits)', 'meaning': 'Number of hits the move counts as in the combo. Most moves count as 1 and only increase the scaling by 1 level, but some count as more than 1 which means the moves following have increased scaling applied to them'},
-                            {'name': 'Immediate scaling', 'meaning': 'Additional scaling applied to the move immediately'},
-                            {'name': 'Next move scaling', 'meaning': 'Additional applied to the move following this one'},
-                            {'name': 'Raw damage', 'meaning': 'Damage of the move before scaling is applied'},
-                            {'name': 'Combo damage', 'meaning': 'Total damage in the combo up to this point'},
-                            {'name': 'Drive gain', 'meaning': 'How much drive the character gains (or loses) from this move'},
-                            {'name': 'Super gain', 'meaning': 'How much Super meter the character gains (or loses) from this move'}]
+                           {'name': 'Move name', 'meaning': 'Inputs of the move'},
+                           {'name': 'Scaled damage', 'meaning': 'Damage of the move after scaling has been applied'},
+                           {'name': 'Final scaling',
+                            'meaning': 'Scaling applied to the move after calculations have been performed'},
+                           {'name': 'Counts as (hits)',
+                            'meaning': 'Number of hits the move counts as in the combo. Most moves count as 1 and only increase the scaling by 1 level, but some count as more than 1 which means the moves following have increased scaling applied to them'},
+                           {'name': 'Immediate scaling',
+                            'meaning': 'Additional scaling applied to the move immediately'},
+                           {'name': 'Next move scaling',
+                            'meaning': 'Additional applied to the move following this one'},
+                           {'name': 'Raw damage', 'meaning': 'Damage of the move before scaling is applied'},
+                           {'name': 'Combo damage', 'meaning': 'Total damage in the combo up to this point'},
+                           {'name': 'Drive gain',
+                            'meaning': 'How much drive the character gains (or loses) from this move'},
+                           {'name': 'Super gain',
+                            'meaning': 'How much Super meter the character gains (or loses) from this move'}]
                        }
     }
 
     # set ui defaults
     ui.colors()
     dark = ui.dark_mode()
-    colors = ui.colors(primary='#465261',dark='#121212')
+    colors = ui.colors(primary='#465261', dark='#121212')
     ui.card.default_style('width: 250px; height: 220px')
 
     def characterSpecificStuff(state):
 
-        def changeAkiPoison(slider_value, label,state):
+        def changeAkiPoison(slider_value, label, state):
             state['additional_damage'] = math.floor(slider_value * 60)
             poison_text = state['additional_damage']
             label.set_text(f'Poison damage: {poison_text}')
             calculateData(state)
 
-        def changeJamieScaling(radio_value,state):
+        def changeJamieScaling(radio_value, state):
             state['character_specifics']['Jamie'] = radio_value
-            filterMoves(move_type_toggle.value,state)
+            filterMoves(move_type_toggle.value, state)
             calculateData(state)
 
-        def kimBuff(toggle_value,state):
+        def kimBuff(toggle_value, state):
             state['character_specifics']['Kimberly'] = toggle_value
             calculateData(state)
 
         char_specific_row.clear()
         if state['character'] == 'Jamie':
             with char_specific_row:
-                ui.select(label='Drink level', options=[0, 1, 2, 3, 4], value=state['character_specifics']['Jamie'],on_change=lambda e: changeJamieScaling(e.value,state)).style('width: 100px')
+                ui.select(label='Drink level', options=[0, 1, 2, 3, 4], value=state['character_specifics']['Jamie'],
+                          on_change=lambda e: changeJamieScaling(e.value, state)).style('width: 100px')
 
         elif state['character'] == 'A.K.I.':
             with char_specific_row:
                 ui.label('Estimated seconds poisoned:').style('height: 40px')
-                poison = ui.slider(min=0.0, max=10.0, step=0.1, value=0).props('label-always').on('update:model-value',lambda e: changeAkiPoison(e.args, poison_label,state),throttle=1.0, leading_events=False)
+                poison = ui.slider(min=0.0, max=10.0, step=0.1, value=0).props('label-always').on('update:model-value',
+                                                                                                  lambda
+                                                                                                      e: changeAkiPoison(
+                                                                                                      e.args,
+                                                                                                      poison_label,
+                                                                                                      state),
+                                                                                                  throttle=1.0,
+                                                                                                  leading_events=False)
                 poison_label = ui.label('Poison damage: 0')
 
         elif state['character'] == 'Kimberly':
             with char_specific_row:
-                ui.checkbox('SA3 buff enabled',value=state['character_specifics']['Kimberly'], on_change= lambda e: kimBuff(e.value,state))
+                ui.checkbox('SA3 buff enabled', value=state['character_specifics']['Kimberly'],
+                            on_change=lambda e: kimBuff(e.value, state))
         else:
             with char_specific_row:
                 ui.label('No character specific options available')
@@ -240,13 +276,13 @@ def main_page():
         character_portrait.set_source(state['char_custom_dict'][selected_character][1])
         character_label.set_content(f'###### **{selected_character}**')
         characterSpecificStuff(state)
-        filterMoves(state['move_types'],state)
+        filterMoves(state['move_types'], state)
         for button in char_row:
             button.clear()
         char_select.close()
         return selected_character
 
-    def filterMoves(value,state):
+    def filterMoves(value, state):
         state['available_moves'] = []
         if value == []:
             state['available_moves'] = list(state['all_moves'].keys())
@@ -257,16 +293,16 @@ def main_page():
                         if state['character_specifics']['Jamie'] in state['all_moves'][move]['Drink level']:
                             state['available_moves'].append(move)
                     else:
-                            state['available_moves'].append(move)
+                        state['available_moves'].append(move)
         move_dropdown.set_options(state['available_moves'])
 
     def selectInput(current_key):
         current_move = None
-        blocked_keys = ['Enter','ArrowDown','ArrowUp','ArrowRight','ArrowLeft','Tab']
+        blocked_keys = ['Enter', 'ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Tab']
         if current_key not in blocked_keys:
             move_dropdown.run_method('setOptionIndex', 0)
 
-    def createChip(name,selected,state):
+    def createChip(name, selected, state):
         if name:
             try:
                 move_type = state['all_moves'][name]['Move type']
@@ -297,7 +333,8 @@ def main_page():
                         icon='sports_mma',
                         color=colour,
                         selected=selected,
-                        on_value_change=lambda: removeMove(new_move),selectable=True,on_selection_change= lambda: updateSelected(state)
+                        on_value_change=lambda: removeMove(new_move), selectable=True,
+                        on_selection_change=lambda: updateSelected(state)
                     ).props('square flat size=18px')
                 calculateData(state)
                 updateSelected(state)
@@ -305,14 +342,13 @@ def main_page():
             except Exception as e:
                 print(f'No move selected:{e}')
 
-
     def updateSelected(state):
         clear_button.set_text('Clear all')
         state['chips_selected'] = False
         for chip in chips:
             chip.classes.clear()
             if chip.selected:
-                chip.classes('ring-2 ring-slate-400 ring-offset-2')#'border-2 border-dashed  border-current')
+                chip.classes('ring-2 ring-slate-400 ring-offset-2')  # 'border-2 border-dashed  border-current')
                 clear_button.set_text('Clear')
                 state['chips_selected'] = True
 
@@ -324,30 +360,30 @@ def main_page():
             return
         for i in selected_chips_indices:
             # if index isn't out of range and isn't next to another selected chip
-            if i >0:
+            if i > 0:
                 chips_list[i], chips_list[i - 1] = chips_list[i - 1], chips_list[i]
         chips.clear()
         for chip in chips_list:
-            createChip(chip.text, chip.selected,state)
+            createChip(chip.text, chip.selected, state)
 
     def moveChipsDown():
         chips_list = list(chips)
-        #enumerate creates tuples where i is the index and chip is the value at that index, e.g. (0,chip1)
+        # enumerate creates tuples where i is the index and chip is the value at that index, e.g. (0,chip1)
         selected_chips_indices = [i for i, chip in enumerate(chips_list) if chip.selected]
-        if len(chips_list) -1 in selected_chips_indices:
+        if len(chips_list) - 1 in selected_chips_indices:
             return
         for i in reversed(selected_chips_indices):
-            #if index isn't out of range and isn't next to another selected chip
-            if i < len(chips_list) -1:
+            # if index isn't out of range and isn't next to another selected chip
+            if i < len(chips_list) - 1:
                 chips_list[i], chips_list[i + 1] = chips_list[i + 1], chips_list[i]
         chips.clear()
         for chip in chips_list:
-            createChip(chip.text, chip.selected,state)
+            createChip(chip.text, chip.selected, state)
 
     def duplicateMove():
         for chip in chips:
             if chip.selected:
-                createChip(chip.text, False,state)
+                createChip(chip.text, False, state)
                 chip.selected = False
 
     def updateMovesFromChips(state):
@@ -377,9 +413,9 @@ def main_page():
             updatePerfectParry(state, False)
             perfect_parry_checkbox.set_value(False)
         state['counter'] = value
-        counter_dict = {'None': ['No Counter','#d5deee'],
-                        'CH':['Counter','#E2C900'],
-                        'PC':['Punish Counter','#FF5118']}
+        counter_dict = {'None': ['No Counter', '#d5deee'],
+                        'CH': ['Counter', '#E2C900'],
+                        'PC': ['Punish Counter', '#FF5118']}
         chips_row.clear()
         with chips_row:
             ui.markdown('#### **Combo string**:').style('flex:1; min-width: 240px')
@@ -403,7 +439,7 @@ def main_page():
         state['drive_gauge'] = drive_slider.value
         state['super_gauge'] = super_slider.value
         try:
-            data = cc.comboCalculatorFunc(move_dict,state)
+            data = cc.comboCalculatorFunc(move_dict, state)
             state['final_damage'] = data[0] + state['additional_damage']
             state['combo_data'] = data[1]
             state['super_gauge'] = data[2]
@@ -420,8 +456,8 @@ def main_page():
     def updateSuperGauge(state):
         svg = ''
         super_gauge_svg = state['super_gauge_svg']
-        current_super = int(state['super_gauge']/10000)
-        bar_percent = float(state['super_gauge'] - (current_super *10000))/10000
+        current_super = int(state['super_gauge'] / 10000)
+        bar_percent = float(state['super_gauge'] - (current_super * 10000)) / 10000
         if bar_percent != 0:
             marker_visibility = 100
         else:
@@ -495,11 +531,11 @@ def main_page():
                                 .outline {stroke: url(#grad1)}
                               </style>
                               <g id="super bar">
-                                <polygon id="bar background" fill="#grey" fill-opacity="30%" points="10,10 316,10 342,50 38,50"/>'''+f'''
-                                <polygon id="bar filling" fill="url(#grad2)" points="10,10 {str((306*bar_percent)+10)},10 {str((304*bar_percent)+38)},50 38,50"/>
+                                <polygon id="bar background" fill="#grey" fill-opacity="30%" points="10,10 316,10 342,50 38,50"/>''' + f'''
+                                <polygon id="bar filling" fill="url(#grad2)" points="10,10 {str((306 * bar_percent) + 10)},10 {str((304 * bar_percent) + 38)},50 38,50"/>
                                 <polygon id="bar outline" stroke="url(#grad1)" stroke-width=2px fill='transparent' points="10,10 316,10 342,50 38,50"/>
-                                <line id="marker grad" stroke-opacity='{marker_visibility}%' class="glow" stroke-width="2px" stroke="url(#grad3)" x1="{str((307*bar_percent)+4)}" y1="2" x2="{str((304*bar_percent)+44)}" y2="58"/>
-                                <line id="marker white" stroke-opacity='{marker_visibility}%' class="glow2" stroke-width="2px" stroke="white" x1="{str((307*bar_percent)+7)}" y1="6" x2="{str((304*bar_percent)+41)}" y2="54"/>
+                                <line id="marker grad" stroke-opacity='{marker_visibility}%' class="glow" stroke-width="2px" stroke="url(#grad3)" x1="{str((307 * bar_percent) + 4)}" y1="2" x2="{str((304 * bar_percent) + 44)}" y2="58"/>
+                                <line id="marker white" stroke-opacity='{marker_visibility}%' class="glow2" stroke-width="2px" stroke="white" x1="{str((307 * bar_percent) + 7)}" y1="6" x2="{str((304 * bar_percent) + 41)}" y2="54"/>
                               </g>
                               </svg>
                         '''
@@ -539,7 +575,6 @@ def main_page():
                     round(89.5 * bar_percent, 2)) + ' z"/>'
                 svg = f'{svg}\n{drive_bar}'
 
-
             drive_gauge_svg = '''
                                 <svg viewBox="0 0 770 35" width="220" height="10" xmlns="http://www.w3.org/2000/svg">
                                 <style>
@@ -558,7 +593,7 @@ def main_page():
                                     {''' + svg + '''
                                     }
                                 </g>
-    
+
                                 </svg>
                                 '''
         drive_gauge_html.set_content(drive_gauge_svg)
@@ -613,16 +648,21 @@ def main_page():
                             with ui.card().style('height: auto').props('square flat').classes('drop-shadow-md'):
                                 with ui.row().style('width:100%'):
                                     with ui.column().style('width:15%').classes('gap-1'):
-                                        ui.button(icon='arrow_back',on_click=lambda: restoreCombo(state,combo_uuid)).style('width:24px;')
-                                        ui.button(icon='delete',on_click=lambda: deleteCombo(state, combo_uuid,new_combo_row)).style('width:24px;')
-                                        ui.button(icon='download',on_click=lambda: downloadCombo(state, combo_uuid,combo_name)).style('width:24px;')
+                                        ui.button(icon='arrow_back',
+                                                  on_click=lambda: restoreCombo(state, combo_uuid)).style('width:24px;')
+                                        ui.button(icon='delete',
+                                                  on_click=lambda: deleteCombo(state, combo_uuid, new_combo_row)).style(
+                                            'width:24px;')
+                                        ui.button(icon='download',
+                                                  on_click=lambda: downloadCombo(state, combo_uuid, combo_name)).style(
+                                            'width:24px;')
                                     with ui.column().style('width:77%'):
                                         ui.markdown(f'###### {combo_name}').style('width:100%;')
                                         ui.restructured_text(f'''
                                         Damage: **{damage_label_text}**
 
                                         Drive gained: **{drive_gauge_gained}**
-                                        
+
                                         Super meter gain: **{super_gauge_gained}** ''')
                 else:
                     ui.notify('Too many saved combos. Delete one to save!')
@@ -637,15 +677,15 @@ def main_page():
         drive_slider.set_value(state['combo_storage'][combo_uuid][4])
         super_slider.set_value(state['combo_storage'][combo_uuid][5])
         for move in state['combo_storage'][combo_uuid][0]:
-            createChip(move,False,state)
+            createChip(move, False, state)
 
     def downloadCombo(state, uuid, name):
         combo_string = (f"Counter: {state['combo_storage'][uuid][1]}"
                         f"\nPerfect Parry: {state['combo_storage'][uuid][2]}"
                         f"\nString: {', '.join(state['combo_storage'][uuid][0])}"
                         f"\nDamage: {state['combo_storage'][uuid][6]}"
-                        f"\nDrive Gain: {state['combo_storage'][uuid][7]-state['combo_storage'][uuid][4]}"
-                        f"\nSuper Gain: {state['combo_storage'][uuid][8]-state['combo_storage'][uuid][5]}"
+                        f"\nDrive Gain: {state['combo_storage'][uuid][7] - state['combo_storage'][uuid][4]}"
+                        f"\nSuper Gain: {state['combo_storage'][uuid][8] - state['combo_storage'][uuid][5]}"
                         )
         ui.download(combo_string.encode('utf-8'), f'{name}.txt')
 
@@ -653,7 +693,7 @@ def main_page():
         del state['combo_storage'][uuid]
         row.delete()
 
-    def hoverStart(button,text):
+    def hoverStart(button, text):
         with button:
             with ui.row().style('width:100%; height:100%; justify-content: center; align-content: center;'):
                 ui.label(text)
@@ -668,47 +708,61 @@ def main_page():
                                    ).style('width:auto; height: auto; justify-content: center; align-content: center;'):
                 ui.markdown('#### **Select a character**').style('justify-self:center; align-self:center')
                 with ui.row().style('width: 300px; height: 100%;justify-content: center; align-content: center;'
-                                   ).classes('gap-1') as char_row:
+                                    ).classes('gap-1') as char_row:
                     for character in state['char_custom_dict'].keys():
                         state['char_custom_dict'][character].append(None)
                         character_button = ui.image(state['char_custom_dict'][character][1],
-                                                  ).style('height:56px;width:56px;justify-content: center; align-content: center;'
-                                                  ).classes('brightness-100 shadow-md rounded-borders'
-                                                  ).on('mousedown',lambda char = character: characterSelected(state, char)
-                                                  ).on('mouseenter', lambda char = character: hoverStart(state['char_custom_dict'][char][2],char)
-                                                  ).on('mouseleave', lambda char = character: hoverEnd(state['char_custom_dict'][char][2]))
+                                                    ).style(
+                            'height:56px;width:56px;justify-content: center; align-content: center;'
+                            ).classes('brightness-100 shadow-md rounded-borders'
+                                      ).on('mousedown', lambda char=character: characterSelected(state, char)
+                                           ).on('mouseenter',
+                                                lambda char=character: hoverStart(state['char_custom_dict'][char][2],
+                                                                                  char)
+                                                ).on('mouseleave', lambda char=character: hoverEnd(
+                            state['char_custom_dict'][char][2]))
                         state['char_custom_dict'][character][2] = character_button
-                ui.button(text='See changes', icon='open_in_new', on_click= lambda: ui.navigate.to('https://github.com/TragicDoggo/sf6comboCalculator/activity',new_tab=True)).style('justify-self:center; align-self:center')
+                ui.button(text='See changes', icon='open_in_new',
+                          on_click=lambda: ui.navigate.to('https://github.com/TragicDoggo/sf6comboCalculator/activity',
+                                                          new_tab=True)).style('justify-self:center; align-self:center')
         # left side
         with ui.column().style('min-width:240px;') as parameter_column:
-             with ui.card().style('width:100%;height:100%;').props('square flat'):
-            #character label and portrait
+            with ui.card().style('width:100%;height:100%;').props('square flat'):
+                # character label and portrait
                 with ui.row().style('width: 100%; justify-content: center;'):
                     character_label = ui.markdown('###### None').style('width:100%; text-align: center;')
                     character_portrait = ui.image('images/None.png'
                                                   ).style('height:56px;width:56px'
-                                                  ).classes('shadow-md rounded-borders brightness-100'
-                                                  ).on('mousedown', lambda: char_select.open()
-                                                  ).on('load', lambda: ui.colors(primary=state['char_custom_dict'][state['character']][0])
-                                                  if state['character'] in state['char_custom_dict'].keys()
-                                                  else ui.colors(primary='#465261')
-                                                       ).on('mouseenter', lambda: hoverStart(character_portrait, 'Switch')
-                                                            ).on('mouseleave', lambda: hoverEnd(character_portrait))
-                #character move select box and filter
+                                                          ).classes('shadow-md rounded-borders brightness-100'
+                                                                    ).on('mousedown', lambda: char_select.open()
+                                                                         ).on('load', lambda: ui.colors(
+                        primary=state['char_custom_dict'][state['character']][0])
+                    if state['character'] in state['char_custom_dict'].keys()
+                    else ui.colors(primary='#465261')
+                                                                              ).on('mouseenter', lambda: hoverStart(
+                        character_portrait, 'Switch')
+                                                                                   ).on('mouseleave', lambda: hoverEnd(
+                        character_portrait))
+                # character move select box and filter
                 ui.markdown('**Character Moves:**')
                 # move select dropdown
                 with ui.row():
                     move_dropdown = ui.select(label='Select Move',
                                               with_input=True,
                                               options=[],
-                                              on_change=lambda e: createChip(e.value,False,state) if e.value else None
-                                              ).style('width:75%').props('hide-selected').on('keydown', lambda e: selectInput(e.args['key']))
-                    select_button = ui.button(icon='check', on_click=lambda e: createChip(move_dropdown.value,False,state)).style(
+                                              on_change=lambda e: createChip(e.value, False, state) if e.value else None
+                                              ).style('width:75%').props('hide-selected').on('keydown',
+                                                                                             lambda e: selectInput(
+                                                                                                 e.args['key']))
+                    select_button = ui.button(icon='check',
+                                              on_click=lambda e: createChip(move_dropdown.value, False, state)).style(
                         'position:relative; top:10px; width:15%')
-                    #filter
-                with ui.expansion('Filter moves',icon='filter_list').style('width:100%; max-width: 280px'):
-                    move_type_toggle = ui.select(label='No filter if empty', options=[],multiple=True,value=[],clearable=True, on_change= lambda e:filterMoves(e.value,state)).style('width: 100%').props('use-chips size=xs dense inline')
-                    #modifiers
+                    # filter
+                with ui.expansion('Filter moves', icon='filter_list').style('width:100%; max-width: 280px'):
+                    move_type_toggle = ui.select(label='No filter if empty', options=[], multiple=True, value=[],
+                                                 clearable=True, on_change=lambda e: filterMoves(e.value, state)).style(
+                        'width: 100%').props('use-chips size=xs dense inline')
+                    # modifiers
                 with ui.expansion('Adjust modifiers', icon='tune').style('width:100%; max-width: 280px'):
                     ui.markdown('**Counter hit:**').style('height: 12px')
                     counter_radio = ui.radio(['None', 'CH', 'PC'], value='None',
@@ -723,16 +777,19 @@ def main_page():
                     ui.markdown('**Character specific options:**').style('height: 12px')
                     with ui.row() as char_specific_row:
                         ui.label('No character selected')
-                    #sliders
+                    # sliders
                 with ui.expansion('Adjust meter settings', icon='speed').style('width:100%; max-width: 280px'):
                     ui.markdown('**Starting Drive:**').style('height: 12px')
-                    drive_slider_labels = {0:"0", 10000:"1", 20000:"2", 30000:"3",40000:"4", 50000:"5", 60000:"6"}
-                    drive_slider = ui.slider(min=0, max=60000, step=250, value=60000).props(f'label thumb-size="0px" track-size="20px" :markers="10000" :marker-labels="{drive_slider_labels}"'
-                    ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
+                    drive_slider_labels = {0: "0", 10000: "1", 20000: "2", 30000: "3", 40000: "4", 50000: "5",
+                                           60000: "6"}
+                    drive_slider = ui.slider(min=0, max=60000, step=250, value=60000).props(
+                        f'label thumb-size="0px" track-size="20px" :markers="10000" :marker-labels="{drive_slider_labels}"'
+                        ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
                     ui.markdown('**Starting Super:**').style('height: 12px')
-                    super_slider_labels = {0:"0", 10000:"1", 20000:"2", 30000:"3"}
-                    super_slider = ui.slider(min=0, max=30000, step=100, value=30000).props(f'label thumb-size="0px" track-size="20px" :markers="10000" :marker-labels="{super_slider_labels}"'
-                    ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
+                    super_slider_labels = {0: "0", 10000: "1", 20000: "2", 30000: "3"}
+                    super_slider = ui.slider(min=0, max=30000, step=100, value=30000).props(
+                        f'label thumb-size="0px" track-size="20px" :markers="10000" :marker-labels="{super_slider_labels}"'
+                        ).on('update:model-value', lambda: calculateData(state), throttle=0.3)
 
         # main body
         with ui.column().style('flex:1; width:100%;min-width:350px;') as combo_column:
@@ -744,18 +801,27 @@ def main_page():
                         'flat square size=18px').style('justify-self:end')
                 with ui.column() as chips:
                     None
-                with ui.row().style('width: 100%; height: 50px' ):
+                with ui.row().style('width: 100%; height: 50px'):
                     with ui.column().style(
-                        'position: absolute; bottom: 10px; left: 10px'):
+                            'position: absolute; bottom: 10px; left: 10px'):
                         with ui.row().classes('gap-1'):
-                            up_button = ui.button(icon='keyboard_arrow_up',on_click=lambda: moveChipsUp()).style('width:40px').bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
-                            down_button = ui.button(icon='keyboard_arrow_down',on_click=lambda: moveChipsDown()).style('width:40px').bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
+                            up_button = ui.button(icon='keyboard_arrow_up', on_click=lambda: moveChipsUp()).style(
+                                'width:40px').bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
+                            down_button = ui.button(icon='keyboard_arrow_down', on_click=lambda: moveChipsDown()).style(
+                                'width:40px').bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
                     with ui.column().style(
                             'position: absolute; bottom: 10px; right: 10px'):
                         with ui.row().classes('gap-1'):
-                            duplicate_button = ui.button(text='Duplicate', on_click=lambda: duplicateMove()).bind_enabled_from(state, 'chips_selected', backward=lambda e: e)
-                            clear_button = ui.button(text='Clear all', on_click=lambda: clearList(state)).bind_enabled_from(state, 'move_list',
-                                                                                               backward=lambda e: e)
+                            duplicate_button = ui.button(text='Duplicate',
+                                                         on_click=lambda: duplicateMove()).bind_enabled_from(state,
+                                                                                                             'chips_selected',
+                                                                                                             backward=lambda
+                                                                                                                 e: e)
+                            clear_button = ui.button(text='Clear all',
+                                                     on_click=lambda: clearList(state)).bind_enabled_from(state,
+                                                                                                          'move_list',
+                                                                                                          backward=lambda
+                                                                                                              e: e)
 
         # right side
         with ui.column(align_items='center').style('width:20%;min-width:240px;') as output_column:
@@ -764,7 +830,8 @@ def main_page():
                 final_damage_label = ui.markdown(f'#### Damage: **{final_damage_number}**').style('width: 100%')
                 drive_gauge_html = ui.html(state['drive_gauge_svg'])
                 with ui.row(align_items='center').style('width: 100%; align-content: center;'):
-                    super_number_label = ui.label(text=3).classes('text-2xl font-black').style('width:3%; color:#ce207a')
+                    super_number_label = ui.label(text=3).classes('text-2xl font-black').style(
+                        'width:3%; color:#ce207a')
                     super_gauge_html = ui.html(state['super_gauge_svg']).style('width:87%')
                 with ui.row().style('width: 100%; justify-content: center;'):
                     show_data_button = ui.button('Data', on_click=lambda: table_dialog.open()).style(
@@ -807,15 +874,17 @@ def main_page():
 
                 ui.markdown('###### **How do I save my combos?**')
 
-                ui.markdown('You can click “Save” next to the final damage on the right of your screen. Once you have named your '
-                            'combo you can click “download" to save it to a text file.')
+                ui.markdown(
+                    'You can click “Save” next to the final damage on the right of your screen. Once you have named your '
+                    'combo you can click “download" to save it to a text file.')
 
                 ui.markdown('###### **What does *term* mean when selecting my moves?**')
 
                 ui.markdown(
                     'There are a number of keywords you might come across when selecting your moves from the drop-down. Check the expansion below for a full list.')
                 with ui.expansion('Move keywords'):
-                    ui.table(columns=state['faq_tables']['term_columns'], rows=state['faq_tables']['move_term_rows'], row_key='name', column_defaults={'align':'left'}).props('wrap-cells')
+                    ui.table(columns=state['faq_tables']['term_columns'], rows=state['faq_tables']['move_term_rows'],
+                             row_key='name', column_defaults={'align': 'left'}).props('wrap-cells')
 
                 ui.markdown('###### **How does the calculation work?**')
 
@@ -848,7 +917,8 @@ def main_page():
                     'The columns in the data table might not be self-explanatory unless you have an decent understanding of the scaling calculation for Street Fighter 6. You can open the expansion below for an explanation of each column.')
 
                 with ui.expansion('Calculation keywords'):
-                     ui.table(columns=state['faq_tables']['term_columns'], rows=state['faq_tables']['data_term_rows'], row_key='name', column_defaults={'align':'left'}).props('wrap-cells')
+                    ui.table(columns=state['faq_tables']['term_columns'], rows=state['faq_tables']['data_term_rows'],
+                             row_key='name', column_defaults={'align': 'left'}).props('wrap-cells')
 
                 ui.markdown('######**How and why did you make this?**')
 
@@ -866,9 +936,11 @@ def main_page():
                     'as much information as you can, including what you did, what happened, what you expected to happen and screenshots if possible. '
                     'If a combo is doing the a different amount of damage in the app as in-game, please double check you have all the same settings and moves, '
                     'and if possible, send a training mode video with inputs and damage numbers enabled so I can troubleshoot. Thank you!')
-                ui.button('Submit a bug report', icon='open_in_new', on_click= lambda: ui.navigate.to('https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header',new_tab=True))
+                ui.button('Submit a bug report', icon='open_in_new', on_click=lambda: ui.navigate.to(
+                    'https://docs.google.com/forms/d/e/1FAIpQLScZaAIoZlvbGyReEaReG2fSogdw5BKusLqWRuxZ7lj55gJNKw/viewform?usp=header',
+                    new_tab=True))
 
-        #footer
+        # footer
         with ui.row().style('width:100%'):
             with ui.button(icon='menu').style('width:38px; position:fixed; bottom: 4px; left: 4px'):
                 with ui.menu():
@@ -883,11 +955,25 @@ def main_page():
                     'images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
 
-ui.run(title='Combo Calculator',favicon='images/icon.webp',on_air=False,reload='FLY_ALLOC_ID' not in os.environ,viewport='width=device-width, user-scalable=no')
+@ui.page('/test')
+def main():
+    print(app.storage.user)
+    state = app.storage.user
 
-#to do:
-# create definitions for keywords
-# add section select for move select dropdown
+    def print_values():
+        if 'input' in state:
+            print(state['input'])
+
+    #def set_storage(value):
+    #    app.storage.browser.clear()
+    #   app.storage.browser['input'] = value
 
 
 
+
+    ui.input().bind_value(state,'input')
+    ui.label().bind_text(state,'input')
+    ui.button(on_click= lambda:print_values())
+
+ui.run(title='Combo Calculator', favicon='images/icon.webp', on_air=False, reload='FLY_ALLOC_ID' not in os.environ,
+       viewport='width=device-width, user-scalable=no', storage_secret='STORAGE_SECRET')
