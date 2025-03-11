@@ -297,7 +297,6 @@ def main_page():
         move_dropdown.set_options(state['available_moves'])
 
     def selectInput(current_key):
-        current_move = None
         blocked_keys = ['Enter', 'ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Tab']
         if current_key not in blocked_keys:
             move_dropdown.run_method('setOptionIndex', 0)
@@ -955,25 +954,5 @@ def main_page():
                     'images/kofi.png').style(
                     'width:200px; position:fixed; bottom: 4px; right: 10px')
 
-@ui.page('/test')
-def main():
-    print(app.storage.user)
-    state = app.storage.user
-
-    def print_values():
-        if 'input' in state:
-            print(state['input'])
-
-    #def set_storage(value):
-    #    app.storage.browser.clear()
-    #   app.storage.browser['input'] = value
-
-
-
-
-    ui.input().bind_value(state,'input')
-    ui.label().bind_text(state,'input')
-    ui.button(on_click= lambda:print_values())
-
-ui.run(title='Combo Calculator', favicon='images/icon.webp', on_air=False, reload='FLY_ALLOC_ID' not in os.environ,
+ui.run(title='Combo Calculator', favicon='images/icon.webp', reload='FLY_ALLOC_ID' not in os.environ,
        viewport='width=device-width, user-scalable=no', storage_secret='STORAGE_SECRET')
